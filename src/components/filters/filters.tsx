@@ -1,51 +1,298 @@
-function Filters():JSX.Element{
+import { ChangeEvent,  useEffect, useState} from 'react';
+import { useLocation, useNavigate} from 'react-router-dom';
+import { AppRoute } from '../../const';
+
+
+enum GuitarType {
+  Ukulele = 'ukulele',
+  Acoustic = 'acoustic',
+  Electric = 'electric',
+}
+
+enum StringsCount {
+  Four = 4,
+  Six = 6,
+  Seven = 7,
+  Twelve = 12
+}
+
+const GuitarStrings = {
+  [GuitarType.Ukulele]: [StringsCount.Four],
+  [GuitarType.Acoustic] : [StringsCount.Six, StringsCount.Seven, StringsCount.Twelve],
+  [GuitarType.Electric] : [StringsCount.Four, StringsCount.Six, StringsCount.Seven],
+};
+
+
+type FiltersProps = {
+  minPrice: number | null,
+  maxPrice: number | null,
+  minPriceInput: number | null,
+  maxPriceInput: number | null,
+  onSetMinPriceInput: (min: number | null) => void,
+  onSetMaxPriceInput: (max: number | null) => void,
+  guitarTypes: string[],
+  onSetGuitarType: (type: string[]) => void,
+  stringsCount: number[],
+  onSetStringsCount: (count: number[]) => void,
+  onSetPage: (page: number) => void,
+}
+
+function Filters(props: FiltersProps):JSX.Element{
+
+  const {
+    minPrice,
+    maxPrice,
+    minPriceInput,
+    maxPriceInput,
+    onSetMinPriceInput,
+    onSetMaxPriceInput,
+    guitarTypes,
+    onSetGuitarType,
+    stringsCount,
+    onSetStringsCount,
+    onSetPage} = props;
+
+  const [stringsType, setStringsType] = useState<StringsCount[]>([]);
+
+  const history = useNavigate();
+  const location = useLocation();
+
+  const handleChangeValidateMinPrice = (target : EventTarget & HTMLInputElement) => {
+    target.value = String(Math.abs(Number(target.value)));
+    onSetMinPriceInput(Number(target.value));
+    onSetPage(1);
+
+    if (maxPriceInput === 0) {
+      onSetMaxPriceInput(maxPrice);
+    }
+  };
+
+  const handleChangeValidateMaxPrice = (target : EventTarget & HTMLInputElement) => {
+    target.value = String(Math.abs(Number(target.value)));
+    onSetMaxPriceInput(Number(target.value));
+    onSetPage(1);
+
+    if (minPriceInput === 0) {
+      onSetMinPriceInput(minPrice);
+    }
+  };
+
+  const handleValidateMinPrice = (target : EventTarget & HTMLInputElement) => {
+    if ((minPrice !== null && maxPrice !== null)
+     && (Number(target.value) < minPrice || Number(target.value) > maxPrice)){
+      target.value = String(minPrice);
+      onSetMinPriceInput(Number(target.value));
+    }
+  };
+
+  const handleValidateMaxPrice = (target : EventTarget & HTMLInputElement ) => {
+    if ((minPrice !== null && maxPrice !== null)
+     && (Number(target.value) > maxPrice || Number(target.value) < minPrice)){
+      target.value = String(maxPrice);
+      onSetMinPriceInput(Number(target.value));
+    }
+  };
+
+  const handleAddGuitarType = (evt: ChangeEvent<HTMLInputElement>, name: string) => {
+    onSetPage(1);
+    if (evt.target.checked && !guitarTypes.includes(name)){
+      onSetGuitarType([...guitarTypes, name]);
+    }
+    if (!evt.target.checked && guitarTypes.includes(name)){
+      const guitars = guitarTypes.filter((item) => item !== name);
+      onSetGuitarType(guitars);
+    }
+  };
+
+  const handleAddStringsCount = (evt: ChangeEvent<HTMLInputElement>, count: number) => {
+    onSetPage(1);
+    if (evt.target.checked && !stringsCount.includes(count)){
+      onSetStringsCount([...stringsCount, count]);
+    }
+    if (!evt.target.checked && stringsCount.includes(count)){
+      const strings = stringsCount.filter((item) => item !== count);
+      onSetStringsCount(strings);
+    }
+  };
+
+  useEffect(() =>{
+    let typeFilter = guitarTypes.length !== 0 ? guitarTypes.map((item, index) => `type=${item}`).join('&') : '';
+    typeFilter = typeFilter !== '' ? `&${typeFilter}` : '';
+
+    let priceFilter = (minPriceInput !== 0) && (maxPriceInput !== 0) ? `price_gte=${minPriceInput}&price_lte=${maxPriceInput}` : '';
+    priceFilter = priceFilter !== '' ? `&${priceFilter}` : '';
+
+    let stringsCountFilter = stringsCount.length !== 0 ? stringsCount.map((item) => `stringCount=${item}`).join('&') : '';
+    stringsCountFilter = stringsCountFilter !== '' ? `&${stringsCountFilter}` : '';
+
+    const filter = typeFilter + stringsCountFilter + priceFilter;
+
+    history(`${location.pathname }?${  filter}`);
+
+  }, [guitarTypes, history, location.pathname, maxPriceInput, minPriceInput, onSetPage, stringsCount]);
+
+
+  useEffect (() => {
+    const strings: StringsCount[] = [];
+
+    if (guitarTypes.length !== 0) {
+      guitarTypes.forEach((item) => {
+        if (item === GuitarType.Acoustic){
+          GuitarStrings[GuitarType.Acoustic].forEach((number) => strings.push(number));
+        }
+        if (item === GuitarType.Electric){
+          GuitarStrings[GuitarType.Electric].forEach((number) => strings.push(number));
+        }
+        if (item === GuitarType.Ukulele){
+          GuitarStrings[GuitarType.Ukulele].forEach((number) => strings.push(number));
+        }
+      });
+    }
+
+    setStringsType([...new Set(strings)]);
+  }, [guitarTypes]);
+
   return(
     <form className="catalog-filter">
       <h2 className="title title--bigger catalog-filter__title">Фильтр</h2>
       <fieldset className="catalog-filter__block">
         <legend className="catalog-filter__block-title">Цена, ₽</legend>
         <div className="catalog-filter__price-range">
-          <div className="htmlForm-input">
+          <div className="form-input">
             <label className="visually-hidden">Минимальная цена</label>
-            <input type="number" placeholder="1 000" id="priceMin" name="от"/>
+            <input
+              type="number"
+              placeholder={minPrice === null || Math.abs(minPrice) === Infinity? '' : String(minPrice)}
+              id="priceMin"
+              name="от"
+              onChange={({target}: ChangeEvent<HTMLInputElement>) =>{
+                history(`${AppRoute.StartPage}${  location.search}`);
+                handleChangeValidateMinPrice(target);
+              }}
+              onBlur={({target}: ChangeEvent<HTMLInputElement>) => handleValidateMinPrice(target)}
+            />
           </div>
-          <div className="htmlForm-input">
+          <div className="form-input">
             <label className="visually-hidden">Максимальная цена</label>
-            <input type="number" placeholder="30 000" id="priceMax" name="до"/>
+            <input
+              type="number"
+              placeholder={maxPrice === null || Math.abs(maxPrice) === Infinity ? '' : String(maxPrice)}
+              id="priceMax"
+              name="до"
+              onChange={({target}: ChangeEvent<HTMLInputElement>) => {
+                history(`${AppRoute.StartPage}${  location.search}`);
+                handleChangeValidateMaxPrice(target);
+              }}
+              onBlur={({target}: ChangeEvent<HTMLInputElement>) => handleValidateMaxPrice(target)}
+            />
           </div>
         </div>
       </fieldset>
       <fieldset className="catalog-filter__block">
         <legend className="catalog-filter__block-title">Тип гитар</legend>
-        <div className="htmlForm-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="acoustic" name="acoustic"/>
+        <div className="form-checkbox catalog-filter__block-item">
+          <input
+            className="visually-hidden"
+            type="checkbox"
+            id="acoustic"
+            name="acoustic"
+            checked={guitarTypes.includes(GuitarType.Acoustic)}
+            onChange={(evt)=>{
+              history(`${AppRoute.StartPage}${  location.search}`);
+              handleAddGuitarType(evt, GuitarType.Acoustic);
+            }}
+          />
           <label htmlFor="acoustic">Акустические гитары</label>
         </div>
-        <div className="htmlForm-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="electric" name="electric" checked />
+        <div className="form-checkbox catalog-filter__block-item">
+          <input
+            className="visually-hidden"
+            type="checkbox"
+            id="electric"
+            name="electric"
+            checked={guitarTypes.includes(GuitarType.Electric)}
+            onChange={(evt)=>{
+              history(`${AppRoute.StartPage}/${  location.search}`);
+              handleAddGuitarType(evt, GuitarType.Electric);
+            }}
+          />
           <label htmlFor="electric">Электрогитары</label>
         </div>
-        <div className="htmlForm-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="ukulele" name="ukulele" checked/>
+        <div className="form-checkbox catalog-filter__block-item">
+          <input
+            className="visually-hidden"
+            type="checkbox"
+            id="ukulele"
+            name="ukulele"
+            checked={guitarTypes.includes(GuitarType.Ukulele)}
+            onChange={(evt)=>{
+              history(`${AppRoute.StartPage}/${  location.search}`);
+              handleAddGuitarType(evt, GuitarType.Ukulele);
+            }}
+          />
           <label htmlFor="ukulele">Укулеле</label>
         </div>
       </fieldset>
       <fieldset className="catalog-filter__block">
         <legend className="catalog-filter__block-title">Количество струн</legend>
-        <div className="htmlForm-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="4-strings" name="4-strings" checked/>
+        <div className="form-checkbox catalog-filter__block-item">
+          <input
+            className="visually-hidden"
+            type="checkbox"
+            id="4-strings"
+            name="4-strings"
+            checked={stringsCount.includes(StringsCount.Four)}
+            onChange={(evt)=> {
+              history(`${AppRoute.StartPage}/${  location.search}`);
+              handleAddStringsCount(evt, StringsCount.Four);
+            }}
+            disabled = {guitarTypes.length !== 0 && !stringsType.includes(StringsCount.Four)}
+          />
           <label htmlFor="4-strings">4</label>
         </div>
-        <div className="htmlForm-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="6-strings" name="6-strings" checked/>
+        <div className="form-checkbox catalog-filter__block-item">
+          <input
+            className="visually-hidden"
+            type="checkbox"
+            id="6-strings"
+            name="6-strings"
+            checked={stringsCount.includes(StringsCount.Six)}
+            onChange={(evt)=> {
+              history(`${AppRoute.StartPage}/${  location.search}`);
+              handleAddStringsCount(evt, StringsCount.Six);
+            }}
+            disabled = {guitarTypes.length !== 0 && !stringsType.includes(StringsCount.Six) }
+          />
           <label htmlFor="6-strings">6</label>
         </div>
-        <div className="htmlForm-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="7-strings" name="7-strings"/>
+        <div className="form-checkbox catalog-filter__block-item">
+          <input
+            className="visually-hidden"
+            type="checkbox"
+            id="7-strings"
+            name="7-strings"
+            checked={stringsCount.includes(StringsCount.Seven)}
+            onChange={(evt)=> {
+              history(`${AppRoute.StartPage}/${  location.search}`);
+              handleAddStringsCount(evt, StringsCount.Seven);
+            }}
+            disabled = {guitarTypes.length !== 0 && !stringsType.includes(StringsCount.Seven) }
+          />
           <label htmlFor="7-strings">7</label>
         </div>
-        <div className="htmlForm-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="12-strings" name="12-strings" disabled/>
+        <div className="form-checkbox catalog-filter__block-item">
+          <input
+            className="visually-hidden"
+            type="checkbox"
+            id="12-strings"
+            name="12-strings"
+            checked={stringsCount.includes(StringsCount.Twelve)}
+            onChange={(evt)=> {
+              history(`${AppRoute.StartPage}/${  location.search}`);
+              handleAddStringsCount(evt, StringsCount.Twelve);
+            }}
+            disabled = {guitarTypes.length !== 0 && !stringsType.includes(StringsCount.Twelve) }
+          />
           <label htmlFor="12-strings">12</label>
         </div>
       </fieldset>

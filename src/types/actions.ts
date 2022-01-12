@@ -11,7 +11,11 @@ import {State} from '../types/state';
 
 export enum ActionType {
   LoadGuitar = 'data/loadGuitar',
-  LoadGuitars = 'data/loadGuitars',
+  LoadPageGuitars = 'data/loadPageGuitars',
+  LoadGuitarsCount = 'data/loadGuitarsCount',
+  LoadLikeGuitars = 'data/loadLikeGuitars',
+  LoadCommentsCount = 'data/loadCommentsCount',
+  LoadMinMaxPrice = 'data/loadMinMaxPrice'
 }
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Action>;

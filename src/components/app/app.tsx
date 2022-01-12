@@ -1,15 +1,21 @@
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
+
 import Catalog from '../catalog/catalog';
+import Main from '../main/main';
+import NotFoundPage from '../not-found-page/not-found-page';
 
 
 function App(): JSX.Element {
   return (
-    <Switch>
-      <Route exact path={AppRoute.Catalog}>
-        <Catalog />
+    <Routes>
+      <Route path={AppRoute.Catalog} element={<Catalog />}>
       </Route>
-    </Switch>
+      <Route path={AppRoute.Main} element={ <Main/>}>
+      </Route>
+      <Route  path="*" element={<NotFoundPage/>}>
+      </Route>
+    </Routes>
   );
 }
 

@@ -1732,6 +1732,7 @@ button,
 
   border: none;
   background-color: rgba(255, 255, 255, 0);
+   color: #585757;
 
   cursor: pointer;
   -webkit-transition: color 0.3s ease, outline-color 0.3s ease;
@@ -1797,9 +1798,7 @@ button,
 }
 
 .catalog-sort__order-button--up {
-  border-width: 0 7px 12px;
-  border-top-color: transparent;
-  border-bottom-color: #585757;
+  transform:rotate(180deg);
 }
 
 .catalog-sort__order-button--up::before {
@@ -2242,6 +2241,8 @@ button,
 
   overflow-y: scroll;
 
+  z-index: 1000;
+
   width: 100%;
   min-height: 100%;
   max-height: 120px;
@@ -2299,17 +2300,65 @@ button,
   color: #545454;
 }
 
+.form-search__link-guitar{
+  color: white;
+}
+
 .logo {
   display: flex;
   align-items: start;
+
 }
 
 .logo__img {
   width: 70px;
   height: 70px;
 
+
+
   -o-object-fit: contain;
      object-fit: contain;
+}
+
+.logo__main-img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  display: block;
+  margin-bottom: 40px;
+  background-color: black;
+}
+
+.container-index {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.main-index {
+  width: 100%;
+  min-width: 1020px;
+  max-width: 1020px;
+  margin: 0 auto;
+  padding: 50px 40px;
+}
+
+.main-title {
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.item-index:hover {
+  color: red
+}
+
+.item-index:hover > .link-index{
+  color: red;
+  cursor: pointer;
+}
+
+.link-index:hover{
+  cursor: pointer;
+  color: red;
 }
 
 .page-content {

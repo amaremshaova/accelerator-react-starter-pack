@@ -21,6 +21,12 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
-  ]
+    "src/**/*"
+  ],
+    "rules": [
+       {
+           "loader":"style-loader!css-loader?modules=true"
+
+       }
+    ]
 }

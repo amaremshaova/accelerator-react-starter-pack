@@ -3,10 +3,22 @@ import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import { createAPI } from './services/api';
 import { configureStore } from '@reduxjs/toolkit';
-import { fetchGuitarsAction } from './store/api-actions';
+import { fetchGuitarsAction, fetchMinMaxAction } from './store/api-actions';
 import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import { Provider} from 'react-redux';
 import { rootReducer } from './store/root-reducer';
+
+
+const INITIAL_FETCH = {
+  name: null,
+  order: 'asc',
+  start: null,
+  end: null,
+  min: null,
+  max: null,
+  types: [],
+  strings: [],
+};
 
 const api = createAPI();
 
@@ -20,7 +32,8 @@ const store = configureStore({
     }),
 });
 
-store.dispatch(fetchGuitarsAction());
+store.dispatch(fetchGuitarsAction(INITIAL_FETCH));
+store.dispatch(fetchMinMaxAction());
 
 ReactDOM.render(
   <React.StrictMode>

@@ -8,7 +8,7 @@ function BreadCrumbs():JSX.Element{
         <Link className='link' to={AppRoute.Main}>Главная</Link>
       </li>
       <li className='breadcrumbs__item'>
-        <Link className='link' to={AppRoute.Catalog} >Каталог</Link>
+        <Link className='link' to={AppRoute.Empty} >Каталог</Link>
       </li>
     </ul>
   );
