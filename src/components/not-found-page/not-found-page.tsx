@@ -4,12 +4,9 @@ import { AppRoute } from '../../const';
 function NotFoundPage():JSX.Element{
   return(
     <div>
-      <h1>
-404.
-        <br />
-        <small>Page not found</small>
+      <h1> 404.Page not found
       </h1>
-      <Link to={AppRoute.Main}>Go to main page</Link>
+      <Link to={AppRoute.Main} className="not-found-page__link">Вернуться на главную</Link>
     </div>);
 }
 

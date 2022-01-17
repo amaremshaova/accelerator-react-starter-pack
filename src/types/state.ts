@@ -9,7 +9,6 @@ export type CommentCountType = {
 export type GuitarData = {
   guitars: Guitar[],
   likeGuitars: Guitar[],
-  activeGuitar?: Guitar,
   guitarsCount: number,
   minPrice: number | null,
   maxPrice: number | null,

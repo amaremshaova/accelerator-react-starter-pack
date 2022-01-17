@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: ProductList should render correctly 1`] = `
+<div>
+  <main
+    class="container-index main-index"
+  >
+    <img
+      alt="Логотип проекта"
+      class="logo__main-img"
+      src="./img/svg/logo.svg"
+      width="300"
+    />
+    <h1
+      class="main-title"
+    >
+      Список страниц
+    </h1>
+    <ol
+      class="list-index"
+    >
+      <li
+        class="item-index"
+      >
+        <a
+          class="link-index"
+          href="/"
+        >
+          UI-kit
+        </a>
+      </li>
+      <li
+        class="item-index"
+      >
+        <a
+          class="link-index"
+          href="/catalog/page_1"
+        >
+          Каталог
+        </a>
+      </li>
+      <li
+        class="item-index"
+      >
+        <a
+          class="link-index"
+          href="/cart"
+        >
+          Корзина
+        </a>
+      </li>
+      <li
+        class="item-index"
+      >
+        <a
+          class="link-index"
+          href="/catalog/"
+        >
+          Товар
+        </a>
+      </li>
+    </ol>
+  </main>
+</div>
+`;

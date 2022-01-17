@@ -1,25 +1,4 @@
-
-enum SocialName {
-  Instagram = 'instagram',
-  Facebook = 'facebook',
-  Twitter = 'twitter'
-}
-
-enum SocialLink {
-  Instagram = 'https://www.instagram.com/',
-  Facebook = 'https://www.facebook.com/',
-  Twitter = 'https://www.twitter.com/'
-}
-
-enum Contact {
-  City = 'Санкт-Петербург',
-  Phone = '8-812-500-50-50',
-  Metro = 'м. Невский проспект',
-  Address = 'ул. Казанская 6',
-  OpeningHours = 'с 11:00 до 20:00',
-  NumberWorkingDays = 'без выходных'
-}
-
+import { Contact, SocialLink, SocialName } from './const';
 
 function Footer():JSX.Element{
   return (
@@ -78,7 +57,7 @@ function Footer():JSX.Element{
           <div className="footer__nav-content">
             <svg className="footer__icon" width="8" height="8" aria-hidden="true">
               <use href="#icon-phone"></use>
-            </svg><a className="link" href="tel:88125005050">{Contact.Phone} </a>
+            </svg><a className="link" href={`tel:${Contact.Phone}`}>{Contact.Phone} </a>
           </div>
           <p className="footer__nav-content">Режим работы:<br/>
             <span className="footer__span">

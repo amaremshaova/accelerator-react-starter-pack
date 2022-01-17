@@ -8,13 +8,10 @@ import NotFoundPage from '../not-found-page/not-found-page';
 
 function App(): JSX.Element {
   return (
-    <Routes>
-      <Route path={AppRoute.Catalog} element={<Catalog />}>
-      </Route>
-      <Route path={AppRoute.Main} element={ <Main/>}>
-      </Route>
-      <Route  path="*" element={<NotFoundPage/>}>
-      </Route>
+    <Routes >
+      <Route path={AppRoute.Catalog} element={<Catalog />}/>
+      <Route path={AppRoute.Main} element={ <Main/>}/>
+      <Route  path={AppRoute.Undefined} element={<NotFoundPage/>}/>
     </Routes>
   );
 }

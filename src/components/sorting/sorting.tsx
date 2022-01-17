@@ -33,6 +33,7 @@ function Sorting(props: SortingProps):JSX.Element{
       </div>
       <div className="catalog-sort__order">
         <button
+          data-testid = "button-up"
           className={`catalog-sort__order-button catalog-sort__order-button--up
           ${sortOrderActive === SortOrder.Up ? 'catalog-sort__order-button--active' : ''}`}
           aria-label="По возрастанию"
@@ -45,6 +46,7 @@ function Sorting(props: SortingProps):JSX.Element{
         >
         </button>
         <button
+          data-testid = "button-down"
           className={`catalog-sort__order-button catalog-sort__order-button--down
           ${sortOrderActive === SortOrder.Down ? 'catalog-sort__order-button--active' : ''}`}
           aria-label="По убыванию"

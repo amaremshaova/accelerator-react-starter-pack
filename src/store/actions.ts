@@ -1,6 +1,7 @@
 import {ActionType} from '../types/actions';
 import { Guitar } from '../types/guitar';
 import {createAction} from '@reduxjs/toolkit';
+import { AppRoute } from '../const';
 
 export const loadPageGuitars = createAction(
   ActionType.LoadPageGuitars,
@@ -11,8 +12,8 @@ export const loadPageGuitars = createAction(
 
 export const loadGuitarsCount = createAction(
   ActionType.LoadGuitarsCount,
-  (guitars: Guitar[]) => ({
-    payload: guitars,
+  (count: number) => ({
+    payload: count,
   }),
 );
 
@@ -46,4 +47,9 @@ export const loadMinMaxPrice = createAction(
   }),
 );
 
-
+export const redirectToRoute = createAction(
+  ActionType.RedirectToRoute,
+  (url: AppRoute) => ({
+    payload: url,
+  }),
+);

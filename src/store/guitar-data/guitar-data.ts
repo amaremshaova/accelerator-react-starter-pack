@@ -1,13 +1,12 @@
 import {createReducer} from '@reduxjs/toolkit';
 import { GuitarData } from '../../types/state';
 
-import { loadGuitar, loadGuitarsCount, loadPageGuitars, loadLikeGuitars, loadCommentsCount, loadMinMaxPrice} from '../actions';
+import {loadGuitarsCount, loadPageGuitars, loadLikeGuitars, loadCommentsCount, loadMinMaxPrice} from '../actions';
 
 
 const initialState: GuitarData = {
   guitars: [],
   likeGuitars: [],
-  activeGuitar: undefined,
   guitarsCount: 0,
   minPrice: null,
   maxPrice: null,
@@ -21,11 +20,10 @@ const guitarData = createReducer(initialState, (builder) => {
       state.maxPrice = action.payload.maxPrice;
     })
     .addCase(loadGuitarsCount, (state, action) => {
-      state.guitarsCount = action.payload.length;
+      state.guitarsCount = action.payload;
     })
     .addCase(loadPageGuitars, (state, action) => {
       state.guitars = action.payload;
-      state.guitarsCount = action.payload.length;
     })
     .addCase(loadLikeGuitars, (state, action) => {
       state.likeGuitars = action.payload;
@@ -35,15 +33,12 @@ const guitarData = createReducer(initialState, (builder) => {
 
       const item = state.commentsCount.find((commentsCount) => commentsCount.id === id);
       if (item) {
-        item.count= count;
+        item.count = count;
       }
       else{
         state.commentsCount = [...state.commentsCount, {id : id, count : count}];
       }
 
-    })
-    .addCase(loadGuitar, (state, action) => {
-      state.activeGuitar = action.payload;
     });
 });
 

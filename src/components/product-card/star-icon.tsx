@@ -3,7 +3,7 @@ type StarIconProps = {
 }
 function StarIcon({percent, id}: StarIconProps) :JSX.Element{
   return(
-    <svg width="12" height="11" aria-hidden="true">
+    <svg width="12" height="11" aria-hidden="true" data-testid={`${percent}-icon`}>
       <linearGradient id={`lg${id}`} x1="0%" x2="100%" y1="0%" y2="0%" width="9" height="8">
         <stop offset="0%" stopOpacity="1" stopColor="#C90606"/>
         <stop offset={`${percent}%`} stopOpacity="1" stopColor="#C90606"/>

@@ -25,14 +25,14 @@ function Pagination(props: PaginationProps):JSX.Element{
   const history = useNavigate();
 
 
-  const hangleSetStartPage = () =>{
+  const handleSetStartPage = () =>{
     if ((pageActive % COUNT_PAGES) === 0){
       return pageActive - 2;
     }
     return Math.floor(pageActive / COUNT_PAGES) * COUNT_PAGES + 1;
   };
 
-  const [startPage, setStartPage] = useState(hangleSetStartPage);
+  const [startPage, setStartPage] = useState(handleSetStartPage);
 
   return(
     <div className="pagination page-content__pagination">

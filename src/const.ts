@@ -13,7 +13,8 @@ export enum AppRoute {
   Page = '/catalog/page_',
   StartPage = '/catalog/page_1',
   Guitar = '/catalog/',
-  Cart = '/cart'
+  Cart = '/cart',
+  Undefined = '*'
 }
 
 

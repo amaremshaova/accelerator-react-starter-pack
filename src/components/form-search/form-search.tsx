@@ -21,7 +21,7 @@ function FormSearch() : JSX.Element{
 
   return (
     <div className="form-search">
-      <form className="form-search__form">
+      <form className="form-search__form" data-testid="form-search__form">
         <button className="form-search__submit" type="submit">
           <svg className="form-search__icon" width="14" height="15" aria-hidden="true">
             <use href="#icon-search"></use>
@@ -29,6 +29,7 @@ function FormSearch() : JSX.Element{
         </button>
         <input
           className="form-search__input"
+          data-testid="search"
           id="search"
           type="text"
           autoComplete="off"
@@ -38,10 +39,17 @@ function FormSearch() : JSX.Element{
         <label className="visually-hidden" htmlFor="search">Поиск</label>
       </form>
       <ul className={`form-search__select-list
-        ${likeGuitars.length === 0 || likeString === '' ? 'hidden' : ''}`}
+        ${(likeGuitars.length === 0 )|| likeString === '' ? 'hidden' : ''}`}
       >
-        { likeGuitars.length !== 0 ? likeGuitars.map((guitar) =>
-          (<li className="form-search__select-item"  tabIndex={0} key={guitar.id + guitar.name}><Link className ="form-search__link-guitar" to={AppRoute.Guitar+guitar.id}>{guitar.name}</Link></li>)) : ''}
+        {likeGuitars.length !== 0 ? likeGuitars.map((guitar) =>
+          (
+            <li
+              className="form-search__select-item"
+              tabIndex={0}
+              key={guitar.id + guitar.name}
+            >
+              <Link className ="form-search__link-guitar" to={AppRoute.Guitar+guitar.id}>{guitar.name}</Link>
+            </li>)) : ''}
       </ul>
     </div>
   );

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import FormSearch from '../form-search/form-search';
 
-
+const CART_COUNT = 2;
 function Header():JSX.Element{
 
   return(
@@ -31,7 +31,7 @@ function Header():JSX.Element{
             <use href="#icon-basket"></use>
           </svg>
           <span className="visually-hidden">Перейти в корзину</span>
-          <span className="header__cart-count">2</span>
+          <span className="header__cart-count">{CART_COUNT}</span>
         </Link>
       </div>
     </header>

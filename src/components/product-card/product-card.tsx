@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import { getCommentsCount } from '../../store/guitar-data/selectors';
 import { Guitar } from '../../types/guitar';
 import StarIcon from './star-icon';
@@ -15,7 +16,7 @@ function ProductCard({product}: ProductCardProps):JSX.Element{
 
   const commentsCount = useSelector(getCommentsCount);
   const handleGetCommentsCount = () => {
-    const commentsCountArray = commentsCount.filter((item) => item.id === product.id);
+    const commentsCountArray = commentsCount? commentsCount.filter((item) => item.id === product.id) : [];
     return commentsCountArray.length === 0 ? '' : commentsCountArray[0].count;
   };
 
@@ -70,8 +71,8 @@ function ProductCard({product}: ProductCardProps):JSX.Element{
         </p>
       </div>
       <div className="product-card__buttons">
-        <Link className="button button--mini" to="#">Подробнее</Link>
-        <a className="button button--red button--mini button--add-to-cart" href="/">Купить</a>
+        <Link className="button button--mini" to={AppRoute.Empty}>Подробнее</Link>
+        <a className="button button--red button--mini button--add-to-cart" href={AppRoute.Main}>Купить</a>
       </div>
     </div>
   );

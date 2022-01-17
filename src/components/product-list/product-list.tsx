@@ -6,7 +6,7 @@ import Sorting from '../sorting/sorting';
 import Pagination from '../pagination/pagination';
 import { useEffect, useState } from 'react';
 import {useParams, useSearchParams } from 'react-router-dom';
-import {fetchCommentsCountAction, fetchGuitarsAction } from '../../store/api-actions';
+import {fetchCommentsCountAction, fetchGuitarsAction, fetchGuitarsCountAction } from '../../store/api-actions';
 import { COUNT_CARDS } from '../catalog/catalog';
 
 
@@ -42,13 +42,16 @@ function ProductList():JSX.Element{
   const [sortOrder, setSortDirect] = useState<string>(SortOrder.Up);
 
   const [minPriceInput, setMinPriceInput] = useState<number | null>(
-    Number(searchParams.get('price_gte')) === 0  && minPrice !== null ? minPrice :  Number(searchParams.get('price_gte')));
+    Number(null));
   const [maxPriceInput, setMaxPriceInput] = useState<number | null>(
-    Number(searchParams.get('price_lte')) === 0 && maxPrice !== null ? maxPrice :  Number(searchParams.get('price_lte')));
+    Number(null));
 
   const [guitarsTypes, setGuitarsTypes] = useState<string[]>(searchParams.getAll('type'));
-  const [stringsCount, setStringsCount] = useState<number[]>(searchParams.getAll('stringCount').map((item) => Number(item)));
+  const [stringsCount, setStringsCount] = useState<number[]>(searchParams.getAll('stringCount')
+    .map((item) => Number(item)));
 
+  guitars.forEach((guitar) =>
+    dispatch(fetchCommentsCountAction(guitar.id)));
 
   useEffect(() => {
     guitars.forEach((guitar) =>
@@ -59,7 +62,19 @@ function ProductList():JSX.Element{
 
     dispatch(fetchGuitarsAction(
       {
-        name: sortType,
+        sortType: sortType,
+        order: sortOrder,
+        start: startCard,
+        end: endCard,
+        min: minPriceInput,
+        max: maxPriceInput,
+        types: guitarsTypes,
+        strings: stringsCount,
+      }));
+
+    dispatch(fetchGuitarsCountAction(
+      {
+        sortType: sortType,
         order: sortOrder,
         start: startCard,
         end: endCard,

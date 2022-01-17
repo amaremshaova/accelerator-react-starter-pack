@@ -3,27 +3,27 @@ import { useLocation, useNavigate} from 'react-router-dom';
 import { AppRoute } from '../../const';
 
 
-enum GuitarType {
+export enum GuitarType {
   Ukulele = 'ukulele',
   Acoustic = 'acoustic',
   Electric = 'electric',
 }
 
-enum StringsCount {
+export enum StringsCount {
   Four = 4,
   Six = 6,
   Seven = 7,
   Twelve = 12
 }
 
-const GuitarStrings = {
+export const GuitarStrings = {
   [GuitarType.Ukulele]: [StringsCount.Four],
   [GuitarType.Acoustic] : [StringsCount.Six, StringsCount.Seven, StringsCount.Twelve],
   [GuitarType.Electric] : [StringsCount.Four, StringsCount.Six, StringsCount.Seven],
 };
 
 
-type FiltersProps = {
+export type FiltersProps = {
   minPrice: number | null,
   maxPrice: number | null,
   minPriceInput: number | null,
@@ -163,10 +163,11 @@ function Filters(props: FiltersProps):JSX.Element{
             <input
               type="number"
               placeholder={minPrice === null || Math.abs(minPrice) === Infinity? '' : String(minPrice)}
+              data-testid="priceMin"
               id="priceMin"
               name="от"
               onChange={({target}: ChangeEvent<HTMLInputElement>) =>{
-                history(`${AppRoute.StartPage}${  location.search}`);
+                history(`${AppRoute.StartPage}/${  location.search}`);
                 handleChangeValidateMinPrice(target);
               }}
               onBlur={({target}: ChangeEvent<HTMLInputElement>) => handleValidateMinPrice(target)}
@@ -177,10 +178,11 @@ function Filters(props: FiltersProps):JSX.Element{
             <input
               type="number"
               placeholder={maxPrice === null || Math.abs(maxPrice) === Infinity ? '' : String(maxPrice)}
+              data-testid="priceMax"
               id="priceMax"
               name="до"
               onChange={({target}: ChangeEvent<HTMLInputElement>) => {
-                history(`${AppRoute.StartPage}${  location.search}`);
+                history(`${AppRoute.StartPage}/${  location.search}`);
                 handleChangeValidateMaxPrice(target);
               }}
               onBlur={({target}: ChangeEvent<HTMLInputElement>) => handleValidateMaxPrice(target)}
@@ -194,11 +196,12 @@ function Filters(props: FiltersProps):JSX.Element{
           <input
             className="visually-hidden"
             type="checkbox"
+            data-testid = "acoustic"
             id="acoustic"
             name="acoustic"
             checked={guitarTypes.includes(GuitarType.Acoustic)}
             onChange={(evt)=>{
-              history(`${AppRoute.StartPage}${  location.search}`);
+              history(`${AppRoute.StartPage}/${  location.search}`);
               handleAddGuitarType(evt, GuitarType.Acoustic);
             }}
           />
@@ -208,6 +211,7 @@ function Filters(props: FiltersProps):JSX.Element{
           <input
             className="visually-hidden"
             type="checkbox"
+            data-testid = "electric"
             id="electric"
             name="electric"
             checked={guitarTypes.includes(GuitarType.Electric)}
@@ -222,6 +226,7 @@ function Filters(props: FiltersProps):JSX.Element{
           <input
             className="visually-hidden"
             type="checkbox"
+            data-testid = "ukulele"
             id="ukulele"
             name="ukulele"
             checked={guitarTypes.includes(GuitarType.Ukulele)}
@@ -239,6 +244,7 @@ function Filters(props: FiltersProps):JSX.Element{
           <input
             className="visually-hidden"
             type="checkbox"
+            data-testid = "4-strings"
             id="4-strings"
             name="4-strings"
             checked={stringsCount.includes(StringsCount.Four)}
@@ -254,6 +260,7 @@ function Filters(props: FiltersProps):JSX.Element{
           <input
             className="visually-hidden"
             type="checkbox"
+            data-testid = "6-strings"
             id="6-strings"
             name="6-strings"
             checked={stringsCount.includes(StringsCount.Six)}
@@ -269,6 +276,7 @@ function Filters(props: FiltersProps):JSX.Element{
           <input
             className="visually-hidden"
             type="checkbox"
+            data-testid = "7-strings"
             id="7-strings"
             name="7-strings"
             checked={stringsCount.includes(StringsCount.Seven)}
@@ -284,6 +292,7 @@ function Filters(props: FiltersProps):JSX.Element{
           <input
             className="visually-hidden"
             type="checkbox"
+            data-testid = "12-strings"
             id="12-strings"
             name="12-strings"
             checked={stringsCount.includes(StringsCount.Twelve)}
