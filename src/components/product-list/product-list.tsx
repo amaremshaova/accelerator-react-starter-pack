@@ -50,9 +50,6 @@ function ProductList():JSX.Element{
   const [stringsCount, setStringsCount] = useState<number[]>(searchParams.getAll('stringCount')
     .map((item) => Number(item)));
 
-  /*guitars.forEach((guitar) =>
-    dispatch(fetchCommentsCountAction(guitar.id)));*/
-
   useEffect(() => {
     guitars.forEach((guitar) =>
       dispatch(fetchCommentsCountAction(guitar.id)));

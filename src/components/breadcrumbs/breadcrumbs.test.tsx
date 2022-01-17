@@ -1,4 +1,3 @@
-/* eslint-disable testing-library/await-async-query */
 import {render, screen} from '@testing-library/react';
 import {Route, Router, Routes} from 'react-router-dom';
 import {createMemoryHistory} from 'history';

@@ -1,7 +1,6 @@
 import { ChangeEvent,  useEffect, useState} from 'react';
 import { useLocation, useNavigate} from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { getMinPrice } from '../../store/guitar-data/selectors';
 
 
 export enum GuitarType {
@@ -155,10 +154,6 @@ function Filters(props: FiltersProps):JSX.Element{
         }
       });
     }
-
-   /* if (guitarTypes.length === 0){
-      return setStringsType([StringsCount.Four, StringsCount.Six, StringsCount.Seven, StringsCount.Twelve]);
-    }*/
 
     return setStringsType([...new Set(strings)]);
   }, [guitarTypes]);

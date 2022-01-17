@@ -9,9 +9,10 @@ import { Provider } from 'react-redux';
 import { guitars, guitarsCount, maxPrice, minPrice } from '../../utils/mocks/guitars';
 import { commentsCountArray } from '../../utils/mocks/comments';
 import { configureMockStore } from '@jedmao/redux-mock-store';
+import thunk from 'redux-thunk';
 
-
-const mockStore = configureMockStore();
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
 
 const store = mockStore({
   DATA: {guitars: guitars,
@@ -77,7 +78,7 @@ describe('Component: Main', () => {
   });
 
 
-/*  it('should redirect to catalog url when user clicked to link', () => {
+  it('should redirect to catalog url when user clicked to link', () => {
     history.push(AppRoute.Main);
     render(fakeApp());
 
@@ -86,7 +87,7 @@ describe('Component: Main', () => {
 
     render(fakeApp());
     screen.getByText('Каталог гитар');
-  });*/
+  });
 });
 
 
