@@ -36,17 +36,12 @@ export const fetchLikeGuitarsAction = (likeString:string): ThunkActionResult =>
 
 const getApiFilterSortLimit = (props: GuitarsActionProps) => {
 
-  const {sortType, order, start, end, types, strings} = props;
-  let {min, max} = props;
-
-  if ((min !== null && max !== null) && (min > max)){
-    [min,max] = [max,min];
-  }
+  const {min, max, sortType, order, start, end, types, strings} = props;
 
   let typeFilter = types.length !== 0 ? types.map((item) => `type=${item}`).join('&') : '';
   typeFilter = typeFilter !== '' ? `&${typeFilter}` : '';
 
-  let priceFilter = (min !== 0) && (max !== 0) ? `price_gte=${min}&price_lte=${max}` : '';
+  let priceFilter = (Number(min) !== 0) && (Number(max) !== 0) ? `price_gte=${min}&price_lte=${max}` : '';
   priceFilter = priceFilter !== '' ? `&${priceFilter}` : '';
 
   let stringsCountFilter = strings.length !== 0 ? strings.map((item) => `stringCount=${item}`).join('&') : '';
@@ -78,7 +73,6 @@ export const fetchGuitarsCountAction = (props: GuitarsActionProps): ThunkActionR
   async (dispatch, _getState, api) => {
     try {
       const {filter, sort} = getApiFilterSortLimit(props);
-
       const data = (await api.get<Guitar[]>(`${ApiPath.Guitars}?${filter}${sort}`)).data;
       dispatch(loadGuitarsCount(data.length));
     } catch {

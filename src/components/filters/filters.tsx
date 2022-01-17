@@ -1,6 +1,7 @@
 import { ChangeEvent,  useEffect, useState} from 'react';
 import { useLocation, useNavigate} from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { getMinPrice } from '../../store/guitar-data/selectors';
 
 
 export enum GuitarType {
@@ -79,17 +80,22 @@ function Filters(props: FiltersProps):JSX.Element{
 
   const handleValidateMinPrice = (target : EventTarget & HTMLInputElement) => {
     if ((minPrice !== null && maxPrice !== null)
-     && (Number(target.value) < minPrice || Number(target.value) > maxPrice)){
+     && (Number(target.value) < minPrice ||
+       Number(target.value) > Number(maxPriceInput) ||
+       Number(target.value) > maxPrice)){
       target.value = String(minPrice);
-      onSetMinPriceInput(Number(target.value));
+      onSetMinPriceInput(minPrice);
     }
   };
 
   const handleValidateMaxPrice = (target : EventTarget & HTMLInputElement ) => {
     if ((minPrice !== null && maxPrice !== null)
-     && (Number(target.value) > maxPrice || Number(target.value) < minPrice)){
+     && (Number(target.value) > maxPrice ||
+     Number(target.value) < minPrice ||
+
+     Number(target.value) < Number(minPriceInput))){
       target.value = String(maxPrice);
-      onSetMinPriceInput(Number(target.value));
+      onSetMaxPriceInput(maxPrice);
     }
   };
 
@@ -102,6 +108,7 @@ function Filters(props: FiltersProps):JSX.Element{
       const guitars = guitarTypes.filter((item) => item !== name);
       onSetGuitarType(guitars);
     }
+    onSetStringsCount(stringsCount.filter((count) => stringsType.includes(count)));
   };
 
   const handleAddStringsCount = (evt: ChangeEvent<HTMLInputElement>, count: number) => {
@@ -129,7 +136,7 @@ function Filters(props: FiltersProps):JSX.Element{
 
     history(`${location.pathname }?${  filter}`);
 
-  }, [guitarTypes, history, location.pathname, maxPriceInput, minPriceInput, onSetPage, stringsCount]);
+  }, [guitarTypes, history, location.pathname, maxPriceInput, minPriceInput, onSetPage, stringsCount, stringsType]);
 
 
   useEffect (() => {
@@ -149,7 +156,11 @@ function Filters(props: FiltersProps):JSX.Element{
       });
     }
 
-    setStringsType([...new Set(strings)]);
+   /* if (guitarTypes.length === 0){
+      return setStringsType([StringsCount.Four, StringsCount.Six, StringsCount.Seven, StringsCount.Twelve]);
+    }*/
+
+    return setStringsType([...new Set(strings)]);
   }, [guitarTypes]);
 
   return(
