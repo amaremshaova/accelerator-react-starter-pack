@@ -7,7 +7,7 @@ export enum ApiPath{
 
 
 export enum AppRoute {
-  Main = '/',
+  Main = '#',
   Catalog = '/catalog/page_:id',
   Empty = '#',
   Page = '/catalog/page_',

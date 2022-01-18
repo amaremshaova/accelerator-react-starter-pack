@@ -14,7 +14,7 @@ function Header():JSX.Element{
         <nav className="main-nav">
           <ul className="main-nav__list">
             <li>
-              <Link className="link main-nav__link" to={AppRoute.StartPage}>Каталог</Link>
+              <Link className="link main-nav__link" to={AppRoute.Empty}>Каталог</Link>
             </li>
             <li>
               <Link className="link main-nav__link" to={AppRoute.Empty}>Где купить?</Link>

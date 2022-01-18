@@ -1,10 +1,11 @@
+import { AppRoute } from '../../const';
 import { Contact, SocialLink, SocialName } from './const';
 
 function Footer():JSX.Element{
   return (
     <footer className="footer">
       <div className="footer__container container">
-        <a className="footer__logo logo" href='/'>
+        <a className="footer__logo logo" href={AppRoute.Main}>
           <img className="logo__img" width="70" height="70" src="./img/svg/logo.svg" alt="Логотип"/>
         </a>
         <div className="socials footer__socials">

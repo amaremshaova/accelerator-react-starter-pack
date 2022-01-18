@@ -3,7 +3,7 @@ import {configureMockStore} from '@jedmao/redux-mock-store';
 import { ApiPath } from '../const';
 import { guitars, maxPrice, minPrice } from '../utils/mocks/guitars';
 import { loadCommentsCount, loadGuitarsCount, loadLikeGuitars, loadMinMaxPrice, loadPageGuitars } from './actions';
-import { fetchCommentsCountAction, fetchGuitarsAction, fetchGuitarsCountAction, fetchLikeGuitarsAction, fetchMinMaxAction } from './api-actions';
+import { fetchCommentsCountAction, fetchGuitarsAction,  fetchLikeGuitarsAction, fetchMinMaxAction } from './api-actions';
 import { State } from '../types/state';
 import { Action} from '@reduxjs/toolkit';
 import { SortOrder, SortType } from '../components/product-list/product-list';
@@ -28,59 +28,7 @@ describe('Async actions', () => {
     const props = {
       sortType: SortType.Price,
       order: SortOrder.Up,
-      start: 1,
-      end: 9,
-      min: 2000,
-      max: 5000,
-      types: [],
-      strings: [4],
-    };
-
-
-    const {
-      sortType,
-      order,
-      start,
-      end,
-      min,
-      max,
-      types,
-      strings,
-    } = props;
-
-    let typeFilter = types.length !== 0 ? types.map((item) => `type=${item}`).join('&') : '';
-    typeFilter = typeFilter !== '' ? `&${typeFilter}` : '';
-
-    let priceFilter = (min !== 0) && (max !== 0) ? `price_gte=${min}&price_lte=${max}` : '';
-    priceFilter = priceFilter !== '' ? `&${priceFilter}` : '';
-
-    let stringsCountFilter = strings.length !== 0 ? strings.map((item) => `stringCount=${item}`).join('&') : '';
-    stringsCountFilter = stringsCountFilter !== '' ? `&${stringsCountFilter}` : '';
-
-    const filter = `${  typeFilter  }${stringsCountFilter  }${priceFilter}`;
-    const sort = sortType !== null ? `&_sort=${sortType}&_order=${order}` : '';
-    const limit = start !== null  && end !== null ? `&_start=${start}&_end=${end}` : '';
-
-    mockAPI
-      .onGet(`${ApiPath.Guitars}?${filter}${sort}${limit}`)
-      .reply(200, mockGuitars);
-
-
-    const store = mockStore();
-    await store.dispatch(fetchGuitarsAction(props));
-
-    expect(store.getActions()).toEqual([
-      loadPageGuitars(mockGuitars),
-    ]);
-  });
-
-  it('should dispatch Load_Guitars_Count when GET /guitars', async () => {
-    const mockGuitars = guitars;
-
-    const props = {
-      sortType: SortType.Price,
-      order: SortOrder.Up,
-      start: 1,
+      start: 0,
       end: 9,
       min: 2000,
       max: 5000,
@@ -116,10 +64,10 @@ describe('Async actions', () => {
 
 
     const store = mockStore();
-    await store.dispatch(fetchGuitarsCountAction(props));
+    await store.dispatch(fetchGuitarsAction(props));
 
     expect(store.getActions()).toEqual([
-      loadGuitarsCount(mockGuitars.length),
+      loadPageGuitars(mockGuitars), loadGuitarsCount(mockGuitars.length),
     ]);
   });
 

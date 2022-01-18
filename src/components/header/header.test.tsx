@@ -49,27 +49,6 @@ describe('Component: Header', () => {
     expect(screen.getByTestId('form-search__form')).not.toBeNull();
   });
 
-  it('should redirect to root url when user clicked to link', () => {
-    history.push(AppRoute.StartPage);
-
-    const fakeApp = () => (
-      <Provider store = {store}>
-        <Router location={history.location} navigator={history}>
-          <Routes>
-            <Route path={AppRoute.StartPage} element={<Header />}/>
-            <Route path = {AppRoute.Main} element={<>This is main page</>}/>
-          </Routes>
-        </Router>
-      </Provider>
-    );
-    render(fakeApp());
-
-    expect(screen.queryByTitle(/This is main page/i)).not.toBeInTheDocument();
-    userEvent.click(screen.getAllByRole('link')[0]);
-    render(fakeApp());
-    expect(screen.getByText('This is main page')).toBeInTheDocument();
-  });
-
   it('should redirect to cart url when user clicked to link', async () => {
     history.push(AppRoute.StartPage);
 

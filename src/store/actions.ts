@@ -1,7 +1,6 @@
 import {ActionType} from '../types/actions';
 import { Guitar } from '../types/guitar';
 import {createAction} from '@reduxjs/toolkit';
-import { AppRoute } from '../const';
 
 export const loadPageGuitars = createAction(
   ActionType.LoadPageGuitars,
@@ -44,12 +43,5 @@ export const loadMinMaxPrice = createAction(
   ActionType.LoadMinMaxPrice,
   (minPrice: number, maxPrice: number) => ({
     payload: {minPrice, maxPrice},
-  }),
-);
-
-export const redirectToRoute = createAction(
-  ActionType.RedirectToRoute,
-  (url: AppRoute) => ({
-    payload: url,
   }),
 );

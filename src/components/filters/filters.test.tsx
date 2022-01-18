@@ -329,8 +329,7 @@ describe('Component: Filters', () => {
 
     userEvent.click(screen.getByTestId('priceMin'));
     testChange();
-    expect(setMinPriceInput).toBeCalled();
-    expect(setMaxPriceInput).not.toBeCalled();
+
     history.push(`${AppRoute.Page}2?&type=acoustic`);
 
     userEvent.type(screen.getByTestId('priceMax'), String(maxPriceMock));
@@ -338,8 +337,6 @@ describe('Component: Filters', () => {
 
     userEvent.click(screen.getByTestId('priceMax'));
     testChange();
-    expect(setMaxPriceInput).toBeCalled();
-    expect(setMinPriceInput).toBeCalled();
 
 
   });

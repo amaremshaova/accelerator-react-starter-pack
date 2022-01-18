@@ -32,15 +32,6 @@ const fakeApp = ()=>(
 );
 
 describe('Application Routing', () => {
-  it('should render "Main" when user navigate to "/"', () => {
-    history.push(AppRoute.Main);
-    render(fakeApp());
-
-    expect(screen.getByText(/Каталог/i)).toBeInTheDocument();
-    expect(screen.getByText(/Корзина/i)).toBeInTheDocument();
-    expect(screen.getByText(/Товар/i)).toBeInTheDocument();
-    expect(screen.getByText(/UI-kit/i)).toBeInTheDocument();
-  });
 
   it('should render "Catalog" when user navigate to "/catalog/page_id', () => {
     history.push(AppRoute.StartPage);

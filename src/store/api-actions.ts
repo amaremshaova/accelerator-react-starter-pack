@@ -6,8 +6,8 @@ import { ApiPath } from '../const';
 type GuitarsActionProps = {
   sortType: string | null,
   order: string | null,
-  start: number | null,
-  end: number | null,
+  start: number | null ,
+  end: number | null ,
   min: number | null,
   max: number | null,
   types: string[],
@@ -24,11 +24,19 @@ export const fetchCommentsCountAction = (id: number): ThunkActionResult =>
     }
   };
 
+  type IndexLikeString = {
+    index: number,
+    guitar: Guitar
+  }
+
 export const fetchLikeGuitarsAction = (likeString:string): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
       const {data} = await api.get<Guitar[]>(`${ApiPath.Guitars}?name_like=${likeString}`);
-      dispatch(loadLikeGuitars(data));
+      const indexLikeString = data.map((item) => ({index: item.name.toLowerCase().search(likeString.toLowerCase()), guitar: item}));
+
+      const sortIndex = (a: IndexLikeString, b: IndexLikeString) => a.index - b.index;
+      dispatch(loadLikeGuitars(indexLikeString.sort(sortIndex).map((item) => item.guitar)));
     } catch {
       dispatch(loadLikeGuitars([]));
     }
@@ -58,26 +66,25 @@ const getApiFilterSortLimit = (props: GuitarsActionProps) => {
 export const fetchGuitarsAction = (props: GuitarsActionProps): ThunkActionResult =>
   async (dispatch, _getState, api) => {
 
-    try {
-      const {filter, sort, limit} = getApiFilterSortLimit(props);
-      const dataPage = (await api.get<Guitar[]>(`${ApiPath.Guitars}?${filter}${sort}${limit}`)).data;
-      dispatch(loadPageGuitars(dataPage));
-    } catch {
-      dispatch(loadPageGuitars([]));
-    }
+    const {start, end} = props;
 
-
-  };
-
-export const fetchGuitarsCountAction = (props: GuitarsActionProps): ThunkActionResult =>
-  async (dispatch, _getState, api) => {
     try {
       const {filter, sort} = getApiFilterSortLimit(props);
       const data = (await api.get<Guitar[]>(`${ApiPath.Guitars}?${filter}${sort}`)).data;
+
+      if (start === null || end === null){
+        dispatch(loadPageGuitars(data));
+      }
+      else{
+        dispatch(loadPageGuitars(data.slice(start, end)));
+      }
+
       dispatch(loadGuitarsCount(data.length));
     } catch {
+      dispatch(loadPageGuitars([]));
       dispatch(loadGuitarsCount(0));
     }
+
 
   };
 

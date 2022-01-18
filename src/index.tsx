@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import { createAPI } from './services/api';
 import { configureStore } from '@reduxjs/toolkit';
-import { fetchGuitarsCountAction, fetchMinMaxAction } from './store/api-actions';
+import { fetchGuitarsAction, fetchMinMaxAction } from './store/api-actions';
 import { Provider} from 'react-redux';
 import { rootReducer } from './store/root-reducer';
 import { BrowserRouter} from 'react-router-dom';
@@ -32,7 +32,7 @@ const store = configureStore({
     }),
 });
 
-store.dispatch(fetchGuitarsCountAction(INITIAL_FETCH));
+store.dispatch(fetchGuitarsAction(INITIAL_FETCH));
 store.dispatch(fetchMinMaxAction());
 
 ReactDOM.render(

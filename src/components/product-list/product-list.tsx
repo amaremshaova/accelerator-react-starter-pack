@@ -6,7 +6,7 @@ import Sorting from '../sorting/sorting';
 import Pagination from '../pagination/pagination';
 import { useEffect, useState } from 'react';
 import {useParams, useSearchParams } from 'react-router-dom';
-import {fetchCommentsCountAction, fetchGuitarsAction, fetchGuitarsCountAction } from '../../store/api-actions';
+import {fetchCommentsCountAction, fetchGuitarsAction } from '../../store/api-actions';
 import { COUNT_CARDS } from '../catalog/catalog';
 
 
@@ -68,19 +68,6 @@ function ProductList():JSX.Element{
         types: guitarsTypes,
         strings: stringsCount,
       }));
-
-    dispatch(fetchGuitarsCountAction(
-      {
-        sortType: sortType,
-        order: sortOrder,
-        start: startCard,
-        end: endCard,
-        min: minPriceInput,
-        max: maxPriceInput,
-        types: guitarsTypes,
-        strings: stringsCount,
-      }));
-
 
   }, [dispatch,
     minPriceInput,

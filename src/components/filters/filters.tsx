@@ -3,6 +3,8 @@ import { useLocation, useNavigate} from 'react-router-dom';
 import { AppRoute } from '../../const';
 
 
+const FIRST_PAGE = 1;
+
 export enum GuitarType {
   Ukulele = 'ukulele',
   Acoustic = 'acoustic',
@@ -59,31 +61,28 @@ function Filters(props: FiltersProps):JSX.Element{
 
   const handleChangeValidateMinPrice = (target : EventTarget & HTMLInputElement) => {
     target.value = String(Math.abs(Number(target.value)));
-    onSetMinPriceInput(Number(target.value));
-    onSetPage(1);
-
-    if (maxPriceInput === 0) {
-      onSetMaxPriceInput(maxPrice);
-    }
   };
 
   const handleChangeValidateMaxPrice = (target : EventTarget & HTMLInputElement) => {
     target.value = String(Math.abs(Number(target.value)));
-    onSetMaxPriceInput(Number(target.value));
-    onSetPage(1);
-
-    if (minPriceInput === 0) {
-      onSetMinPriceInput(minPrice);
-    }
   };
 
   const handleValidateMinPrice = (target : EventTarget & HTMLInputElement) => {
+
     if ((minPrice !== null && maxPrice !== null)
      && (Number(target.value) < minPrice ||
-       Number(target.value) > Number(maxPriceInput) ||
+      (maxPriceInput !== 0 && Number(target.value) > Number(maxPriceInput)) ||
        Number(target.value) > maxPrice)){
       target.value = String(minPrice);
       onSetMinPriceInput(minPrice);
+    }
+    else{
+      onSetMinPriceInput(Number(target.value));
+      onSetPage(FIRST_PAGE);
+
+      if (Number(maxPriceInput) === 0) {
+        onSetMaxPriceInput(maxPrice);
+      }
     }
   };
 
@@ -92,14 +91,22 @@ function Filters(props: FiltersProps):JSX.Element{
      && (Number(target.value) > maxPrice ||
      Number(target.value) < minPrice ||
 
-     Number(target.value) < Number(minPriceInput))){
+     (minPriceInput !== 0 && Number(target.value) < Number(minPriceInput)))){
       target.value = String(maxPrice);
       onSetMaxPriceInput(maxPrice);
+    }
+    else{
+      onSetMaxPriceInput(Number(target.value));
+      onSetPage(FIRST_PAGE);
+
+      if (Number(minPriceInput) === 0) {
+        onSetMinPriceInput(minPrice);
+      }
     }
   };
 
   const handleAddGuitarType = (evt: ChangeEvent<HTMLInputElement>, name: string) => {
-    onSetPage(1);
+    onSetPage(FIRST_PAGE);
     if (evt.target.checked && !guitarTypes.includes(name)){
       onSetGuitarType([...guitarTypes, name]);
     }
@@ -111,7 +118,7 @@ function Filters(props: FiltersProps):JSX.Element{
   };
 
   const handleAddStringsCount = (evt: ChangeEvent<HTMLInputElement>, count: number) => {
-    onSetPage(1);
+    onSetPage(FIRST_PAGE);
     if (evt.target.checked && !stringsCount.includes(count)){
       onSetStringsCount([...stringsCount, count]);
     }
@@ -168,7 +175,7 @@ function Filters(props: FiltersProps):JSX.Element{
             <label className="visually-hidden">Минимальная цена</label>
             <input
               type="number"
-              placeholder={minPrice === null || Math.abs(minPrice) === Infinity? '' : String(minPrice)}
+              placeholder={Number(minPrice) === 0 ? '' : String(minPrice)}
               data-testid="priceMin"
               id="priceMin"
               name="от"
@@ -183,7 +190,7 @@ function Filters(props: FiltersProps):JSX.Element{
             <label className="visually-hidden">Максимальная цена</label>
             <input
               type="number"
-              placeholder={maxPrice === null || Math.abs(maxPrice) === Infinity ? '' : String(maxPrice)}
+              placeholder={Number(maxPrice) === 0  ? '' : String(maxPrice)}
               data-testid="priceMax"
               id="priceMax"
               name="до"

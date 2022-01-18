@@ -11,7 +11,7 @@ exports[`Component: Catalog should render correctly 1`] = `
     >
       <a
         class="header__logo logo"
-        href="/"
+        href="/catalog/page_:id"
       >
         <img
           alt="Логотип"
@@ -30,7 +30,7 @@ exports[`Component: Catalog should render correctly 1`] = `
           <li>
             <a
               class="link main-nav__link"
-              href="/catalog/page_1"
+              href="/catalog/page_:id"
             >
               Каталог
             </a>
@@ -170,7 +170,7 @@ exports[`Component: Catalog should render correctly 1`] = `
         >
           <a
             class="link"
-            href="/"
+            href="/catalog/page_:id"
           >
             Главная
           </a>
@@ -702,7 +702,7 @@ exports[`Component: Catalog should render correctly 1`] = `
               </a>
               <a
                 class="button button--red button--mini button--add-to-cart"
-                href="/"
+                href="#"
               >
                 Купить
               </a>
@@ -991,7 +991,7 @@ exports[`Component: Catalog should render correctly 1`] = `
               </a>
               <a
                 class="button button--red button--mini button--add-to-cart"
-                href="/"
+                href="#"
               >
                 Купить
               </a>
@@ -1022,7 +1022,7 @@ exports[`Component: Catalog should render correctly 1`] = `
     >
       <a
         class="footer__logo logo"
-        href="/"
+        href="#"
       >
         <img
           alt="Логотип"

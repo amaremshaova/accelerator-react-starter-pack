@@ -7,7 +7,6 @@ import { commentsCountArray } from '../../utils/mocks/comments';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { AppRoute } from '../../const';
 import { createMemoryHistory } from 'history';
-import Main from '../main/main';
 import thunk from 'redux-thunk';
 
 const middlewares = [thunk];
@@ -31,7 +30,6 @@ describe('Component: ProductList', () => {
         <BrowserRouter>
           <Routes>
             <Route path={AppRoute.Catalog} element={ <ProductList />}/>
-            <Route path={AppRoute.Main} element={ <Main/>}/>
           </Routes>
         </BrowserRouter>
       </Provider>,
