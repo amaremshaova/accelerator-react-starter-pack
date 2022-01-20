@@ -5,7 +5,7 @@ import Filters from '../filters/filters';
 import Sorting from '../sorting/sorting';
 import Pagination from '../pagination/pagination';
 import { useEffect, useState } from 'react';
-import {useParams, useSearchParams } from 'react-router-dom';
+import {useLocation, useParams, useSearchParams } from 'react-router-dom';
 import {fetchCommentsCountAction, fetchGuitarsAction } from '../../store/api-actions';
 import { COUNT_CARDS } from '../catalog/catalog';
 
@@ -38,6 +38,8 @@ function ProductList():JSX.Element{
 
   const [searchParams] = useSearchParams();
 
+  const history = useLocation();
+
   const [sortType, setSortType] = useState<string | null>(null);
   const [sortOrder, setSortDirect] = useState<string>(SortOrder.Up);
 
@@ -49,6 +51,15 @@ function ProductList():JSX.Element{
   const [guitarsTypes, setGuitarsTypes] = useState<string[]>(searchParams.getAll('type'));
   const [stringsCount, setStringsCount] = useState<number[]>(searchParams.getAll('stringCount')
     .map((item) => Number(item)));
+
+  useEffect(() => {
+
+    if (history.search === ''){
+      setGuitarsTypes([]);
+      setStringsCount([]);
+
+    }
+  }, [history.search]);
 
   useEffect(() => {
     guitars.forEach((guitar) =>
