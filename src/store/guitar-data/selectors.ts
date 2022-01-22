@@ -8,3 +8,4 @@ export const getGuitarsCount = (state: State): number => state[NameSpace.Data].g
 export const getMinPrice = (state: State): number | null => state[NameSpace.Data].minPrice;
 export const getMaxPrice = (state: State): number | null => state[NameSpace.Data].maxPrice;
 export const getCommentsCount = (state: State): CommentCountType[] => state[NameSpace.Data].commentsCount;
+export const getIsLoadData = (state: State): boolean => state[NameSpace.Data].isLoadData;

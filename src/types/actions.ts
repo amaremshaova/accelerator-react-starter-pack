@@ -16,7 +16,7 @@ export enum ActionType {
   LoadLikeGuitars = 'data/loadLikeGuitars',
   LoadCommentsCount = 'data/loadCommentsCount',
   LoadMinMaxPrice = 'data/loadMinMaxPrice',
-  RedirectToRoute = 'game/redirectToRoute'
+  CheckingLoadData = 'data/checkingLoadData',
 }
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Action>;

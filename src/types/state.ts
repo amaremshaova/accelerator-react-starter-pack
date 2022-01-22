@@ -12,7 +12,8 @@ export type GuitarData = {
   guitarsCount: number,
   minPrice: number | null,
   maxPrice: number | null,
-  commentsCount: CommentCountType[]
+  commentsCount: CommentCountType[],
+  isLoadData: boolean
 };
 
 export type State = RootState;

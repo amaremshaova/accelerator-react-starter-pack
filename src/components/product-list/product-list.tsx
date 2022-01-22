@@ -1,6 +1,6 @@
 import ProductCard from '../product-card/product-card';
 import { useDispatch, useSelector } from 'react-redux';
-import { getGuitars, getMinPrice, getMaxPrice} from '../../store/guitar-data/selectors';
+import { getGuitars, getMinPrice, getMaxPrice, getIsLoadData} from '../../store/guitar-data/selectors';
 import Filters from '../filters/filters';
 import Sorting from '../sorting/sorting';
 import Pagination from '../pagination/pagination';
@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import {useLocation, useParams, useSearchParams } from 'react-router-dom';
 import {fetchCommentsCountAction, fetchGuitarsAction } from '../../store/api-actions';
 import { COUNT_CARDS } from '../catalog/catalog';
-
+import LoadingScreen from '../loading-screen/loading-screen';
 
 export enum SortType {
   Price = 'price',
@@ -26,6 +26,7 @@ function ProductList():JSX.Element{
   const guitars = useSelector(getGuitars);
   const minPrice = useSelector(getMinPrice);
   const maxPrice = useSelector(getMaxPrice);
+  const isLoadData = useSelector(getIsLoadData);
 
   const dispatch = useDispatch();
 
@@ -43,21 +44,19 @@ function ProductList():JSX.Element{
   const [sortType, setSortType] = useState<string | null>(null);
   const [sortOrder, setSortDirect] = useState<string>(SortOrder.Up);
 
-  const [minPriceInput, setMinPriceInput] = useState<number | null>(
-    Number(null));
-  const [maxPriceInput, setMaxPriceInput] = useState<number | null>(
-    Number(null));
+  const [minPriceInput, setMinPriceInput] = useState<number>(
+    Number(searchParams.get('price_gte')));
+  const [maxPriceInput, setMaxPriceInput] = useState<number>(
+    Number(searchParams.get('price_lte')));
 
   const [guitarsTypes, setGuitarsTypes] = useState<string[]>(searchParams.getAll('type'));
   const [stringsCount, setStringsCount] = useState<number[]>(searchParams.getAll('stringCount')
     .map((item) => Number(item)));
 
   useEffect(() => {
-
     if (history.search === ''){
       setGuitarsTypes([]);
       setStringsCount([]);
-
     }
   }, [history.search]);
 
@@ -74,8 +73,8 @@ function ProductList():JSX.Element{
         order: sortOrder,
         start: startCard,
         end: endCard,
-        min: minPriceInput,
-        max: maxPriceInput,
+        min: minPriceInput === 0 ? minPrice : minPriceInput,
+        max: maxPriceInput === 0 ? maxPrice : maxPriceInput,
         types: guitarsTypes,
         strings: stringsCount,
       }));
@@ -115,9 +114,9 @@ function ProductList():JSX.Element{
       />
       <div className="cards catalog__cards">
         {
-          guitars.map((guitar) =>
+          isLoadData ? guitars.map((guitar) =>
             <ProductCard key={guitar.id} product={guitar}/>,
-          )
+          ) :  <LoadingScreen/>
         }
       </div>
       <Pagination pageActive={page} onSetPage = {setPage}/>
@@ -126,3 +125,5 @@ function ProductList():JSX.Element{
 }
 
 export default ProductList;
+
+

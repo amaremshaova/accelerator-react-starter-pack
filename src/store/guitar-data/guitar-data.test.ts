@@ -22,7 +22,8 @@ describe('Reducer: guitarData', () => {
       guitarsCount: 0,
       minPrice: null,
       maxPrice: null,
-      commentsCount: []};
+      commentsCount: [],
+      isLoadData: false};
     expect(guitarData(state, loadPageGuitars(guitars)))
       .toEqual({guitars,
         likeGuitars: [],
@@ -40,7 +41,8 @@ describe('Reducer: guitarData', () => {
       guitarsCount: 0,
       minPrice: null,
       maxPrice: null,
-      commentsCount: []};
+      commentsCount: [],
+      isLoadData: false};
     expect(guitarData(state, loadMinMaxPrice(minPrice, maxPrice)))
       .toEqual({guitars: [],
         likeGuitars: [],
@@ -58,7 +60,8 @@ describe('Reducer: guitarData', () => {
       guitarsCount: 0,
       minPrice: null,
       maxPrice: null,
-      commentsCount: []};
+      commentsCount: [],
+      isLoadData: false};
     expect(guitarData(state, loadLikeGuitars(guitars)))
       .toEqual({guitars: [],
         likeGuitars: guitars,
@@ -76,7 +79,8 @@ describe('Reducer: guitarData', () => {
       guitarsCount: 0,
       minPrice: null,
       maxPrice: null,
-      commentsCount: []};
+      commentsCount: [],
+      isLoadData: false};
     expect(guitarData(state,loadGuitarsCount(guitarsCount)))
       .toEqual({guitars: [],
         likeGuitars: [],
@@ -94,7 +98,8 @@ describe('Reducer: guitarData', () => {
       guitarsCount: 0,
       minPrice: null,
       maxPrice: null,
-      commentsCount: [{id : 1, count: 2}]};
+      commentsCount: [{id : 1, count: 2}],
+      isLoadData: false};
     expect(guitarData(state, loadCommentsCount(1, commentsCount)))
       .toEqual({guitars: [],
         likeGuitars: [],

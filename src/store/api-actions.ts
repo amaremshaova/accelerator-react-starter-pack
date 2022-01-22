@@ -1,7 +1,8 @@
 import {ThunkActionResult} from '../types/actions';
-import { loadLikeGuitars, loadGuitarsCount, loadCommentsCount, loadPageGuitars, loadMinMaxPrice} from './actions';
+import { loadLikeGuitars, loadGuitarsCount, loadCommentsCount, loadPageGuitars, loadMinMaxPrice, checkingLoadData} from './actions';
 import { Comment, Guitar } from '../types/guitar';
 import { ApiPath } from '../const';
+import {toast} from 'react-toastify';
 
 type GuitarsActionProps = {
   sortType: string | null,
@@ -14,13 +15,15 @@ type GuitarsActionProps = {
   strings: number[],
 }
 
+const AUTH_FAIL_MESSAGE = 'Сервер не загружен';
+
 export const fetchCommentsCountAction = (id: number): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
       const {data} = await api.get<Comment[]>(ApiPath.Guitars+String(id)+ApiPath.Comments);
       dispatch(loadCommentsCount(id, data.length));
     } catch {
-      dispatch(loadCommentsCount(id, 0));
+      toast.info(AUTH_FAIL_MESSAGE);
     }
   };
 
@@ -38,7 +41,7 @@ export const fetchLikeGuitarsAction = (likeString:string): ThunkActionResult =>
       const sortIndex = (a: IndexLikeString, b: IndexLikeString) => a.index - b.index;
       dispatch(loadLikeGuitars(indexLikeString.sort(sortIndex).map((item) => item.guitar)));
     } catch {
-      dispatch(loadLikeGuitars([]));
+      toast.info(AUTH_FAIL_MESSAGE);
     }
   };
 
@@ -67,6 +70,7 @@ export const fetchGuitarsAction = (props: GuitarsActionProps): ThunkActionResult
   async (dispatch, _getState, api) => {
 
     const {start, end} = props;
+    dispatch(checkingLoadData(false));
 
     try {
       const {filter, sort} = getApiFilterSortLimit(props);
@@ -80,11 +84,11 @@ export const fetchGuitarsAction = (props: GuitarsActionProps): ThunkActionResult
       }
 
       dispatch(loadGuitarsCount(data.length));
+      dispatch(checkingLoadData(true));
     } catch {
+      toast.info(AUTH_FAIL_MESSAGE);
       dispatch(loadPageGuitars([]));
-      dispatch(loadGuitarsCount(0));
     }
-
 
   };
 
@@ -96,9 +100,6 @@ export const fetchMinMaxAction = (): ThunkActionResult =>
 
     dispatch(loadMinMaxPrice(minPrice, maxPrice));
   } catch {
-    dispatch(loadMinMaxPrice(0, 0));
-  }
-
-
-  };
+    toast.info(AUTH_FAIL_MESSAGE);
+  }};
 

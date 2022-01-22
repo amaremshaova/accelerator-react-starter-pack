@@ -7,6 +7,8 @@ import { fetchGuitarsAction, fetchMinMaxAction } from './store/api-actions';
 import { Provider} from 'react-redux';
 import { rootReducer } from './store/root-reducer';
 import { BrowserRouter} from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const INITIAL_FETCH = {
@@ -18,6 +20,7 @@ const INITIAL_FETCH = {
   max: null,
   types: [],
   strings: [],
+  isLoadData: false,
 };
 
 const api = createAPI();
@@ -39,6 +42,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store = {store}>
       <BrowserRouter >
+        <ToastContainer limit ={1}/>
         <App />
       </BrowserRouter>
     </Provider>

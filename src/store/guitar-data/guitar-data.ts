@@ -1,7 +1,7 @@
 import {createReducer} from '@reduxjs/toolkit';
 import { GuitarData } from '../../types/state';
 
-import {loadGuitarsCount, loadPageGuitars, loadLikeGuitars, loadCommentsCount, loadMinMaxPrice} from '../actions';
+import {loadGuitarsCount, loadPageGuitars, loadLikeGuitars, loadCommentsCount, loadMinMaxPrice, checkingLoadData} from '../actions';
 
 
 const initialState: GuitarData = {
@@ -11,10 +11,14 @@ const initialState: GuitarData = {
   minPrice: null,
   maxPrice: null,
   commentsCount: [],
+  isLoadData: false,
 };
 
 const guitarData = createReducer(initialState, (builder) => {
   builder
+    .addCase(checkingLoadData, (state, action) => {
+      state.isLoadData = action.payload;
+    })
     .addCase(loadMinMaxPrice,  (state, action) => {
       state.minPrice = action.payload.minPrice;
       state.maxPrice = action.payload.maxPrice;

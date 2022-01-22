@@ -1,4 +1,4 @@
-import { ChangeEvent,  useEffect, useState} from 'react';
+import { ChangeEvent,  useEffect, useRef, useState} from 'react';
 import { useLocation, useNavigate} from 'react-router-dom';
 import { AppRoute } from '../../const';
 
@@ -30,8 +30,8 @@ export type FiltersProps = {
   maxPrice: number | null,
   minPriceInput: number | null,
   maxPriceInput: number | null,
-  onSetMinPriceInput: (min: number | null) => void,
-  onSetMaxPriceInput: (max: number | null) => void,
+  onSetMinPriceInput: (min: number) => void,
+  onSetMaxPriceInput: (max: number) => void,
   guitarTypes: string[],
   onSetGuitarType: (type: string[]) => void,
   stringsCount: number[],
@@ -56,52 +56,48 @@ function Filters(props: FiltersProps):JSX.Element{
 
   const [stringsType, setStringsType] = useState<StringsCount[]>([]);
 
+  const minPriceRef = useRef<HTMLInputElement | null>(null);
+  const maxPriceRef = useRef<HTMLInputElement | null>(null);
+
+  if (minPriceRef.current){
+    minPriceRef.current.defaultValue = minPriceInput === 0 ? '' : String(minPriceInput);
+  }
+
+  if (maxPriceRef.current){
+    maxPriceRef.current.defaultValue =  maxPriceInput === 0 ? '' : String(maxPriceInput);
+  }
+
   const history = useNavigate();
   const location = useLocation();
 
-  const handleChangeValidateMinPrice = (target : EventTarget & HTMLInputElement) => {
-    target.value = String(Math.abs(Number(target.value)));
-  };
-
-  const handleChangeValidateMaxPrice = (target : EventTarget & HTMLInputElement) => {
+  const handleChangeValidatePrice = (target : EventTarget & HTMLInputElement) => {
     target.value = String(Math.abs(Number(target.value)));
   };
 
   const handleValidateMinPrice = (target : EventTarget & HTMLInputElement) => {
 
-    if ((minPrice !== null && maxPrice !== null)
-     && (Number(target.value) < minPrice ||
+    if ((Number(target.value) !== 0 && Number(target.value) < Number(minPrice)) ||
       (maxPriceInput !== 0 && Number(target.value) > Number(maxPriceInput)) ||
-       Number(target.value) > maxPrice)){
+       Number(target.value) > Number(maxPrice)){
       target.value = String(minPrice);
-      onSetMinPriceInput(minPrice);
+      onSetMinPriceInput(Number(minPrice));
     }
     else{
       onSetMinPriceInput(Number(target.value));
       onSetPage(FIRST_PAGE);
-
-      if (Number(maxPriceInput) === 0) {
-        onSetMaxPriceInput(maxPrice);
-      }
     }
   };
 
   const handleValidateMaxPrice = (target : EventTarget & HTMLInputElement ) => {
-    if ((minPrice !== null && maxPrice !== null)
-     && (Number(target.value) > maxPrice ||
-     Number(target.value) < minPrice ||
-
-     (minPriceInput !== 0 && Number(target.value) < Number(minPriceInput)))){
+    if ((Number(target.value) !== 0 && Number(target.value) > Number(maxPrice)) ||
+     (minPriceInput !== 0 && Number(target.value) < Number(minPriceInput)) ||
+     Number(target.value) < Number(minPrice)){
       target.value = String(maxPrice);
-      onSetMaxPriceInput(maxPrice);
+      onSetMaxPriceInput(Number(maxPrice));
     }
     else{
       onSetMaxPriceInput(Number(target.value));
       onSetPage(FIRST_PAGE);
-
-      if (Number(minPriceInput) === 0) {
-        onSetMinPriceInput(minPrice);
-      }
     }
   };
 
@@ -132,8 +128,10 @@ function Filters(props: FiltersProps):JSX.Element{
     let typeFilter = guitarTypes.length !== 0 ? guitarTypes.map((item, index) => `type=${item}`).join('&') : '';
     typeFilter = typeFilter !== '' ? `&${typeFilter}` : '';
 
-    let priceFilter = (minPriceInput !== 0) && (maxPriceInput !== 0) ? `price_gte=${minPriceInput}&price_lte=${maxPriceInput}` : '';
-    priceFilter = priceFilter !== '' ? `&${priceFilter}` : '';
+    const minPriceFilter = minPriceInput !== 0 ? `&price_gte=${minPriceInput}` : '';
+    const maxPriceFilter = maxPriceInput !== 0 ? `&price_lte=${maxPriceInput}` : '';
+
+    const priceFilter = minPriceFilter + maxPriceFilter;
 
     let stringsCountFilter = stringsCount.length !== 0 ? stringsCount.map((item) => `stringCount=${item}`).join('&') : '';
     stringsCountFilter = stringsCountFilter !== '' ? `&${stringsCountFilter}` : '';
@@ -174,6 +172,7 @@ function Filters(props: FiltersProps):JSX.Element{
           <div className="form-input">
             <label className="visually-hidden">Минимальная цена</label>
             <input
+              ref = {minPriceRef}
               type="number"
               placeholder={Number(minPrice) === 0 ? '' : String(minPrice)}
               data-testid="priceMin"
@@ -181,7 +180,7 @@ function Filters(props: FiltersProps):JSX.Element{
               name="от"
               onChange={({target}: ChangeEvent<HTMLInputElement>) =>{
                 history(`${AppRoute.StartPage}/${  location.search}`);
-                handleChangeValidateMinPrice(target);
+                handleChangeValidatePrice(target);
               }}
               onBlur={({target}: ChangeEvent<HTMLInputElement>) => handleValidateMinPrice(target)}
             />
@@ -189,14 +188,15 @@ function Filters(props: FiltersProps):JSX.Element{
           <div className="form-input">
             <label className="visually-hidden">Максимальная цена</label>
             <input
+              ref = {maxPriceRef}
               type="number"
-              placeholder={Number(maxPrice) === 0  ? '' : String(maxPrice)}
+              placeholder={Number(maxPrice) === 0 ? '' : String(maxPrice)}
               data-testid="priceMax"
               id="priceMax"
               name="до"
               onChange={({target}: ChangeEvent<HTMLInputElement>) => {
                 history(`${AppRoute.StartPage}/${  location.search}`);
-                handleChangeValidateMaxPrice(target);
+                handleChangeValidatePrice(target);
               }}
               onBlur={({target}: ChangeEvent<HTMLInputElement>) => handleValidateMaxPrice(target)}
             />

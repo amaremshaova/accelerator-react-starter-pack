@@ -45,3 +45,10 @@ export const loadMinMaxPrice = createAction(
     payload: {minPrice, maxPrice},
   }),
 );
+
+export const checkingLoadData = createAction(
+  ActionType.CheckingLoadData,
+  (isLoad: boolean) => ({
+    payload: isLoad,
+  }),
+);
