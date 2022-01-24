@@ -76,7 +76,8 @@ function Filters(props: FiltersProps):JSX.Element{
 
   const handleValidateMinPrice = (target : EventTarget & HTMLInputElement) => {
 
-    if ((Number(target.value) !== 0 && Number(target.value) < Number(minPrice)) ||
+    if (Number(target.value) < Number(minPrice) ||
+      (Number(target.value) === 0) ||
       (maxPriceInput !== 0 && Number(target.value) > Number(maxPriceInput)) ||
        Number(target.value) > Number(maxPrice)){
       target.value = String(minPrice);
@@ -89,7 +90,8 @@ function Filters(props: FiltersProps):JSX.Element{
   };
 
   const handleValidateMaxPrice = (target : EventTarget & HTMLInputElement ) => {
-    if ((Number(target.value) !== 0 && Number(target.value) > Number(maxPrice)) ||
+    if ( Number(target.value) > Number(maxPrice) ||
+    (Number(target.value) === 0) ||
      (minPriceInput !== 0 && Number(target.value) < Number(minPriceInput)) ||
      Number(target.value) < Number(minPrice)){
       target.value = String(maxPrice);
