@@ -1,5 +1,5 @@
 import { checkingLoadComments, checkingLoadData, loadComments, loadCommentsCount, loadGuitar, loadGuitarsCount, loadLikeGuitars, loadMinMaxPrice, loadPageGuitars } from '../actions';
-import { guitarData, initialActiveGuitar } from './guitar-data';
+import { guitarData} from './guitar-data';
 import { guitars, guitarsCount, maxPrice, minPrice } from '../../utils/mocks/guitars';
 import { comments, commentsCount } from '../../utils/mocks/comments';
 
@@ -8,7 +8,7 @@ describe('Reducer: guitarData', () => {
     expect(guitarData(void 0, {type: 'UNKNOWN_ACTION'}))
       .toEqual({  guitars: [],
         likeGuitars: [],
-        activeGuitar: initialActiveGuitar,
+        activeGuitar: undefined,
         guitarsCount: 0,
         minPrice: null,
         maxPrice: null,
