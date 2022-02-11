@@ -18,6 +18,12 @@ export enum StringsCount {
   Twelve = 12
 }
 
+export const GuitarTypeRU = {
+  [GuitarType.Ukulele]: 'Укулеле',
+  [GuitarType.Acoustic] : 'Акустическая гитара',
+  [GuitarType.Electric] : 'Электрогитара',
+};
+
 export const GuitarStrings = {
   [GuitarType.Ukulele]: [StringsCount.Four],
   [GuitarType.Acoustic] : [StringsCount.Six, StringsCount.Seven, StringsCount.Twelve],
@@ -181,7 +187,7 @@ function Filters(props: FiltersProps):JSX.Element{
               id="priceMin"
               name="от"
               onChange={({target}: ChangeEvent<HTMLInputElement>) =>{
-                history(`${AppRoute.StartPage}/${  location.search}`);
+                history(`${AppRoute.CatalogStartPage}/${  location.search}`);
                 handleChangeValidatePrice(target);
               }}
               onBlur={({target}: ChangeEvent<HTMLInputElement>) => handleValidateMinPrice(target)}
@@ -197,7 +203,7 @@ function Filters(props: FiltersProps):JSX.Element{
               id="priceMax"
               name="до"
               onChange={({target}: ChangeEvent<HTMLInputElement>) => {
-                history(`${AppRoute.StartPage}/${  location.search}`);
+                history(`${AppRoute.CatalogStartPage}/${  location.search}`);
                 handleChangeValidatePrice(target);
               }}
               onBlur={({target}: ChangeEvent<HTMLInputElement>) => handleValidateMaxPrice(target)}
@@ -216,7 +222,7 @@ function Filters(props: FiltersProps):JSX.Element{
             name="acoustic"
             checked={guitarTypes.includes(GuitarType.Acoustic)}
             onChange={(evt)=>{
-              history(`${AppRoute.StartPage}/${  location.search}`);
+              history(`${AppRoute.CatalogStartPage}/${  location.search}`);
               handleAddGuitarType(evt, GuitarType.Acoustic);
             }}
           />
@@ -231,7 +237,7 @@ function Filters(props: FiltersProps):JSX.Element{
             name="electric"
             checked={guitarTypes.includes(GuitarType.Electric)}
             onChange={(evt)=>{
-              history(`${AppRoute.StartPage}/${  location.search}`);
+              history(`${AppRoute.CatalogStartPage}/${  location.search}`);
               handleAddGuitarType(evt, GuitarType.Electric);
             }}
           />
@@ -246,7 +252,7 @@ function Filters(props: FiltersProps):JSX.Element{
             name="ukulele"
             checked={guitarTypes.includes(GuitarType.Ukulele)}
             onChange={(evt)=>{
-              history(`${AppRoute.StartPage}/${  location.search}`);
+              history(`${AppRoute.CatalogStartPage}/${  location.search}`);
               handleAddGuitarType(evt, GuitarType.Ukulele);
             }}
           />
@@ -264,7 +270,7 @@ function Filters(props: FiltersProps):JSX.Element{
             name="4-strings"
             checked={stringsCount.includes(StringsCount.Four)}
             onChange={(evt)=> {
-              history(`${AppRoute.StartPage}/${  location.search}`);
+              history(`${AppRoute.CatalogStartPage}/${  location.search}`);
               handleAddStringsCount(evt, StringsCount.Four);
             }}
             disabled = {guitarTypes.length !== 0 && !stringsType.includes(StringsCount.Four)}
@@ -280,7 +286,7 @@ function Filters(props: FiltersProps):JSX.Element{
             name="6-strings"
             checked={stringsCount.includes(StringsCount.Six)}
             onChange={(evt)=> {
-              history(`${AppRoute.StartPage}/${  location.search}`);
+              history(`${AppRoute.CatalogStartPage}/${  location.search}`);
               handleAddStringsCount(evt, StringsCount.Six);
             }}
             disabled = {guitarTypes.length !== 0 && !stringsType.includes(StringsCount.Six) }
@@ -296,7 +302,7 @@ function Filters(props: FiltersProps):JSX.Element{
             name="7-strings"
             checked={stringsCount.includes(StringsCount.Seven)}
             onChange={(evt)=> {
-              history(`${AppRoute.StartPage}/${  location.search}`);
+              history(`${AppRoute.CatalogStartPage}/${  location.search}`);
               handleAddStringsCount(evt, StringsCount.Seven);
             }}
             disabled = {guitarTypes.length !== 0 && !stringsType.includes(StringsCount.Seven) }
@@ -312,7 +318,7 @@ function Filters(props: FiltersProps):JSX.Element{
             name="12-strings"
             checked={stringsCount.includes(StringsCount.Twelve)}
             onChange={(evt)=> {
-              history(`${AppRoute.StartPage}/${  location.search}`);
+              history(`${AppRoute.CatalogStartPage}/${  location.search}`);
               handleAddStringsCount(evt, StringsCount.Twelve);
             }}
             disabled = {guitarTypes.length !== 0 && !stringsType.includes(StringsCount.Twelve) }

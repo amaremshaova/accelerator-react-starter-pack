@@ -50,13 +50,13 @@ describe('Component: Header', () => {
   });
 
   it('should redirect to cart url when user clicked to link', async () => {
-    history.push(AppRoute.StartPage);
+    history.push(AppRoute.CatalogStartPage);
 
     const fakeApp = () => (
       <Provider store = {store}>
         <Router location={history.location} navigator={history}>
           <Routes>
-            <Route path={AppRoute.StartPage} element={<Header />}/>
+            <Route path={AppRoute.CatalogStartPage} element={<Header />}/>
             <Route path = {AppRoute.Cart} element={<>This is cart page</>}/>
           </Routes>
         </Router>

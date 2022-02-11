@@ -8,13 +8,12 @@ export enum ApiPath{
 
 export enum AppRoute {
   Main = '#',
-  Catalog = '/catalog/page_:id',
+  Catalog = '/catalog/',
+  CatalogPage = '/catalog/page_',
   Empty = '#',
-  Page = '/catalog/page_',
-  StartPage = '/catalog/page_1',
-  Guitar = '/catalog/',
+  CatalogStartPage = '/catalog/page_1',
   Cart = '/cart',
-  Undefined = '*'
+  Undefined = '*',
+  Root = '/'
 }
-
 

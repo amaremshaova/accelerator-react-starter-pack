@@ -38,7 +38,7 @@ const fakeApp = (store: Store<unknown, AnyAction>, props: FiltersProps) => {
     <Provider store = {store}>
       <Router navigator={history} location={history.location}>
         <Routes>
-          <Route path={AppRoute.Catalog}
+          <Route path={`${AppRoute.CatalogPage}:id`}
             element={
               <Filters minPrice={minPrice}
                 maxPrice={maxPrice}
@@ -86,7 +86,7 @@ describe('Component: Filters', () => {
       onSetMinPriceInput : setMinPriceInput,
       onSetMaxPriceInput : setMaxPriceInput};
 
-    history.push(AppRoute.Catalog);
+    history.push(AppRoute.CatalogStartPage);
 
     render(fakeApp(store, props));
 
@@ -125,7 +125,7 @@ describe('Component: Filters', () => {
       onSetMinPriceInput : setMinPriceInput,
       onSetMaxPriceInput : setMaxPriceInput};
 
-    history.push(AppRoute.Catalog);
+    history.push(AppRoute.CatalogStartPage);
 
     render(fakeApp(store, props));
 
@@ -155,7 +155,7 @@ describe('Component: Filters', () => {
       onSetMinPriceInput : setMinPriceInput,
       onSetMaxPriceInput : setMaxPriceInput};
 
-    history.push(AppRoute.Catalog);
+    history.push(AppRoute.CatalogStartPage);
 
     render(fakeApp(store, props));
 
@@ -187,7 +187,8 @@ describe('Component: Filters', () => {
       onSetMinPriceInput : setMinPriceInput,
       onSetMaxPriceInput : setMaxPriceInput};
 
-    history.push(AppRoute.Catalog);
+
+    history.push(AppRoute.CatalogStartPage);
 
     render(fakeApp(store, props));
 
@@ -217,7 +218,8 @@ describe('Component: Filters', () => {
       onSetMinPriceInput : setMinPriceInput,
       onSetMaxPriceInput : setMaxPriceInput};
 
-    history.push(AppRoute.Catalog);
+
+    history.push(AppRoute.CatalogStartPage);
 
     render(fakeApp(store, props));
 
@@ -246,9 +248,8 @@ describe('Component: Filters', () => {
       onSetMinPriceInput : setMinPriceInput,
       onSetMaxPriceInput : setMaxPriceInput};
 
-    history.push(AppRoute.Catalog);
 
-
+    history.push(AppRoute.CatalogStartPage);
     render(fakeApp(store, props));
 
     expect(screen.getByTestId('acoustic')).toBeChecked();
@@ -264,8 +265,8 @@ describe('Component: Filters', () => {
   it('should redirect when changing the filter', () => {
 
     const props = {
-      maxPrice: null,
       minPrice: null,
+      maxPrice: maxPriceMock,
       maxPriceInput: null,
       minPriceInput: null,
       guitarTypes: [],
@@ -276,52 +277,52 @@ describe('Component: Filters', () => {
       onSetMinPriceInput : setMinPriceInput,
       onSetMaxPriceInput : setMaxPriceInput};
 
-    history.push(`${AppRoute.Page}2?&type=acoustic`);
+    history.push(`${AppRoute.CatalogPage}2?&type=acoustic`);
 
     render(fakeApp(store, props));
 
     const testChange = () => {
       expect(setPage).toBeCalled();
 
-      expect(history.location.pathname ===`${AppRoute.StartPage}/`).toBeTruthy();
+      expect(history.location.pathname ===`${AppRoute.CatalogStartPage}/`).toBeTruthy();
       expect(history.location.search === '?&type=acoustic').toBeTruthy();
     };
 
     userEvent.click(screen.getByTestId('acoustic'));
     testChange();
     expect(setGuitarType).toBeCalled();
-    history.push(`${AppRoute.Page}2?&type=acoustic`);
+    history.push(`${AppRoute.CatalogPage}2?&type=acoustic`);
 
     userEvent.click(screen.getByTestId('electric'));
     testChange();
     expect(setGuitarType).toBeCalled();
-    history.push(`${AppRoute.Page}2?&type=acoustic`);
+    history.push(`${AppRoute.CatalogPage}2?&type=acoustic`);
 
     userEvent.click(screen.getByTestId('ukulele'));
     testChange();
     expect(setGuitarType).toBeCalled();
-    history.push(`${AppRoute.Page}2?&type=acoustic`);
+    history.push(`${AppRoute.CatalogPage}2?&type=acoustic`);
 
 
     userEvent.click(screen.getByTestId('4-strings'));
     testChange();
     expect(setStringsCount).toBeCalled();
-    history.push(`${AppRoute.Page}2?&type=acoustic`);
+    history.push(`${AppRoute.CatalogPage}2?&type=acoustic`);
 
     userEvent.click(screen.getByTestId('6-strings'));
     testChange();
     expect(setStringsCount).toBeCalled();
-    history.push(`${AppRoute.Page}2?&type=acoustic`);
+    history.push(`${AppRoute.CatalogPage}2?&type=acoustic`);
 
     userEvent.click(screen.getByTestId('7-strings'));
     testChange();
     expect(setStringsCount).toBeCalled();
-    history.push(`${AppRoute.Page}2?&type=acoustic`);
+    history.push(`${AppRoute.CatalogPage}2?&type=acoustic`);
 
     userEvent.click(screen.getByTestId('12-strings'));
     testChange();
     expect(setStringsCount).toBeCalled();
-    history.push(`${AppRoute.Page}2?&type=acoustic`);
+    history.push(`${AppRoute.CatalogPage}2?&type=acoustic`);
 
 
     userEvent.type(screen.getByTestId('priceMin'), String(minPriceMock));
@@ -330,7 +331,7 @@ describe('Component: Filters', () => {
     userEvent.click(screen.getByTestId('priceMin'));
     testChange();
 
-    history.push(`${AppRoute.Page}2?&type=acoustic`);
+    history.push(`${AppRoute.CatalogPage}2?&type=acoustic`);
 
     userEvent.type(screen.getByTestId('priceMax'), String(maxPriceMock));
     expect(screen.getByDisplayValue(maxPriceMock)).toBeInTheDocument();

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute} from '../../const';
 import { getGuitarsCount } from '../../store/guitar-data/selectors';
 import { COUNT_CARDS } from '../catalog/catalog';
 
@@ -44,7 +44,7 @@ function Pagination(props: PaginationProps):JSX.Element{
                 onClick={(evt) => {
                   evt.preventDefault();
                   window.scrollTo(0,SCROLL_TO_Y);
-                  history(`${AppRoute.Page + (pageActive - 1)  }/${  location.search}`);
+                  history(`${AppRoute.CatalogPage + (pageActive - 1)  }/${  location.search}`);
                   onSetPage(pageActive - 1);
                   if (pageActive === startPage){
                     setStartPage( pageActive - 3);
@@ -62,7 +62,7 @@ function Pagination(props: PaginationProps):JSX.Element{
                 onClick={(evt) => {
                   evt.preventDefault();
                   window.scrollTo(0,SCROLL_TO_Y);
-                  history(`${AppRoute.Page + startPage  }/${  location.search}`);
+                  history(`${AppRoute.CatalogPage + startPage  }/${  location.search}`);
                   onSetPage(startPage);
                 }}
               >{startPage}
@@ -76,7 +76,7 @@ function Pagination(props: PaginationProps):JSX.Element{
                 onClick={(evt) => {
                   evt.preventDefault();
                   window.scrollTo(0,SCROLL_TO_Y);
-                  history(`${AppRoute.Page + (startPage + 1)  }/${  location.search}`);
+                  history(`${AppRoute.CatalogPage + (startPage + 1)  }/${  location.search}`);
                   onSetPage(startPage + 1);
                 }}
               >{startPage + 1}
@@ -90,7 +90,7 @@ function Pagination(props: PaginationProps):JSX.Element{
                 onClick={(evt) => {
                   evt.preventDefault();
                   window.scrollTo(0,SCROLL_TO_Y);
-                  history(`${AppRoute.Page + (startPage + 2)  }/${  location.search}`);
+                  history(`${AppRoute.CatalogPage + (startPage + 2)  }/${  location.search}`);
                   onSetPage(startPage + 2);
                 }}
               >{startPage + 2}
@@ -104,7 +104,7 @@ function Pagination(props: PaginationProps):JSX.Element{
                 onClick={(evt) => {
                   evt.preventDefault();
                   window.scrollTo(0,SCROLL_TO_Y);
-                  history(`${AppRoute.Page + (pageActive + 1)  }/${  location.search}`);
+                  history(`${AppRoute.CatalogPage + (pageActive + 1)  }/${  location.search}`);
                   onSetPage(pageActive + 1);
                   if (pageActive === startPage + 2){
                     setStartPage(pageActive + 1);

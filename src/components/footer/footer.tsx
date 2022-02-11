@@ -1,6 +1,7 @@
 import { AppRoute } from '../../const';
 import { Contact, SocialLink, SocialName } from './const';
 
+
 function Footer():JSX.Element{
   return (
     <footer className="footer">

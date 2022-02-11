@@ -34,10 +34,18 @@ const fakeApp = ()=>(
 describe('Application Routing', () => {
 
   it('should render "Catalog" when user navigate to "/catalog/page_id', () => {
-    history.push(AppRoute.StartPage);
+    history.push(AppRoute.CatalogStartPage);
 
     render(fakeApp());
     expect(screen.getByText(/Каталог гитар/i)).toBeInTheDocument();
+  });
+
+  it('should render "Product Page" when user navigate to "/catalog/id', () => {
+    history.push(AppRoute.Catalog + 1);
+
+    render(fakeApp());
+    expect(screen.getByText(/Загрузка информации о товаре.../i)).toBeInTheDocument();
+    expect(screen.getByText(/Загрузка отзывов.../i)).toBeInTheDocument();
   });
 
 

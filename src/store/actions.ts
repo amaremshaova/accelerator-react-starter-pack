@@ -1,5 +1,5 @@
 import {ActionType} from '../types/actions';
-import { Guitar } from '../types/guitar';
+import { Comment, Guitar } from '../types/guitar';
 import {createAction} from '@reduxjs/toolkit';
 
 export const loadPageGuitars = createAction(
@@ -23,11 +23,17 @@ export const loadGuitar = createAction(
   }),
 );
 
-
 export const loadLikeGuitars = createAction(
   ActionType.LoadLikeGuitars,
   (guitars: Guitar[]) => ({
     payload: guitars,
+  }),
+);
+
+export const loadComments = createAction(
+  ActionType.LoadComments,
+  (comments: Comment[]) => ({
+    payload: comments,
   }),
 );
 
@@ -52,3 +58,18 @@ export const checkingLoadData = createAction(
     payload: isLoad,
   }),
 );
+
+export const checkingLoadComments = createAction(
+  ActionType.CheckingLoadComments,
+  (isLoad: boolean) => ({
+    payload: isLoad,
+  }),
+);
+
+export const addReview = createAction(
+  ActionType.AddReview,
+  (status: number) => ({
+    payload: {status},
+  }),
+);
+

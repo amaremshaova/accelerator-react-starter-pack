@@ -93,7 +93,6 @@ describe('Component: Sorting', () => {
     userEvent.click(screen.getByTestId('button-up'));
     expect(setSortOrder).toBeCalled();
     expect(setSortType).toBeCalled();
-
   });
 
 

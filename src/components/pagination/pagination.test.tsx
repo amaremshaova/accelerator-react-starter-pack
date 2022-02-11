@@ -1,7 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import {Route, Router, Routes} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
-import { AppRoute } from '../../const';
+import { AppRoute} from '../../const';
 import { Provider } from 'react-redux';
 import { configureMockStore, MockStore } from '@jedmao/redux-mock-store';
 import Pagination from './pagination';
@@ -19,7 +19,7 @@ const fakeApp = (store: MockStore<unknown, AnyAction>, pageActive : number, setP
   <Provider store = {store}>
     <Router navigator={history} location={history.location}>
       <Routes>
-        <Route path={AppRoute.Catalog}
+        <Route path={`${AppRoute.CatalogPage  }:id`}
           element={
             <Pagination
               pageActive = {pageActive}
@@ -43,7 +43,7 @@ describe('Component: Pagination', () => {
     const pageActive = 1;
     const setPage = jest.fn();
 
-    history.push(AppRoute.Catalog);
+    history.push(AppRoute.CatalogStartPage);
 
     render(fakeApp(store, pageActive, setPage));
 
@@ -64,7 +64,7 @@ describe('Component: Pagination', () => {
     const pageActive = 1;
     const setPage = jest.fn();
 
-    history.push(AppRoute.Catalog);
+    history.push(AppRoute.CatalogStartPage);
 
 
     render(fakeApp(store, pageActive, setPage));
@@ -86,7 +86,7 @@ describe('Component: Pagination', () => {
     const pageActive = 2;
     const setPage = jest.fn();
 
-    history.push(AppRoute.Catalog);
+    history.push(AppRoute.CatalogStartPage);
     render(fakeApp(store, pageActive, setPage));
 
     expect(screen.getAllByRole('listitem').length).toBe(5);
@@ -117,7 +117,7 @@ describe('Component: Pagination', () => {
     const pageActive = 3;
     const setPage = jest.fn();
 
-    history.push(AppRoute.Catalog);
+    history.push(AppRoute.CatalogStartPage);
 
 
     render(fakeApp(store, pageActive, setPage));
@@ -141,11 +141,11 @@ describe('Component: Pagination', () => {
     });
 
 
-    history.push(`${AppRoute.Page+pageActive}?&type=acoustic`);
+    history.push(`${AppRoute.CatalogPage+pageActive}?&type=acoustic`);
     render(fakeApp(store, pageActive, setPage));
 
     userEvent.click(screen.getByText('Далее'));
-    expect(history.location.pathname ===`${AppRoute.Page}${(pageActive+1)}/`).toBeTruthy();
+    expect(history.location.pathname ===`${AppRoute.CatalogPage}${(pageActive+1)}/`).toBeTruthy();
     expect(history.location.search === '?&type=acoustic').toBeTruthy();
 
   });
@@ -161,11 +161,11 @@ describe('Component: Pagination', () => {
     });
 
 
-    history.push(`${AppRoute.Page+pageActive}?&type=acoustic`);
+    history.push(`${AppRoute.CatalogPage+pageActive}?&type=acoustic`);
     render(fakeApp(store, pageActive, setPage));
 
     userEvent.click(screen.getByText('Назад'));
-    expect(history.location.pathname ===`${AppRoute.Page}${(pageActive-1)}/`).toBeTruthy();
+    expect(history.location.pathname ===`${AppRoute.CatalogPage}${(pageActive-1)}/`).toBeTruthy();
     expect(history.location.search === '?&type=acoustic').toBeTruthy();
 
   });
@@ -181,11 +181,11 @@ describe('Component: Pagination', () => {
     });
 
 
-    history.push(`${AppRoute.Page+pageActive}?&type=acoustic`);
+    history.push(`${AppRoute.CatalogPage+pageActive}?&type=acoustic`);
     render(fakeApp(store, pageActive, setPage));
 
     userEvent.click(screen.getAllByRole('link')[3]);
-    expect(history.location.pathname ===`${AppRoute.Page}${(pageActive+1)}/`).toBeTruthy();
+    expect(history.location.pathname ===`${AppRoute.CatalogPage}${(pageActive+1)}/`).toBeTruthy();
     expect(history.location.search === '?&type=acoustic').toBeTruthy();
 
   });
@@ -201,11 +201,11 @@ describe('Component: Pagination', () => {
     });
 
 
-    history.push(`${AppRoute.Page+pageActive}?&type=acoustic`);
+    history.push(`${AppRoute.CatalogPage+pageActive}?&type=acoustic`);
     render(fakeApp(store, pageActive, setPage));
 
     userEvent.click(screen.getAllByRole('link')[1]);
-    expect(history.location.pathname ===`${AppRoute.Page}${(pageActive-1)}/`).toBeTruthy();
+    expect(history.location.pathname ===`${AppRoute.CatalogPage}${(pageActive-1)}/`).toBeTruthy();
     expect(history.location.search === '?&type=acoustic').toBeTruthy();
 
   });

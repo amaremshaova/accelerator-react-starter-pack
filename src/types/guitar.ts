@@ -1,8 +1,10 @@
+import { GuitarType } from '../components/filters/filters';
+
 export type Guitar = {
   id : number,
   name: string,
   vendorCode: string,
-  type: string,
+  type: GuitarType,
   description: string,
   previewImg: string,
   stringCount: number,
@@ -13,8 +15,8 @@ export type Guitar = {
 export type Comment = {
   id: string,
   userName: string,
-  advantages: string,
-  disadvantages: string,
+  advantage: string,
+  disadvantage: string,
   comment: string,
   rating: number,
   createAt: string,
@@ -25,8 +27,8 @@ export type CommentPost = {
   guitarId: number,
   userName: string,
   advantage: string,
-  disadvantage: string,
-  comment: string,
+  disadvantage:  string,
+  comment:  string,
   rating: number,
 }
 

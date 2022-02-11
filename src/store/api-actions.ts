@@ -1,8 +1,9 @@
 import {ThunkActionResult} from '../types/actions';
-import { loadLikeGuitars, loadGuitarsCount, loadCommentsCount, loadPageGuitars, loadMinMaxPrice, checkingLoadData} from './actions';
-import { Comment, Guitar } from '../types/guitar';
-import { ApiPath } from '../const';
+import { loadLikeGuitars, loadGuitarsCount, loadCommentsCount, loadPageGuitars, loadMinMaxPrice, checkingLoadData, loadComments, loadGuitar, addReview, checkingLoadComments} from './actions';
+import { Comment, CommentPost, Guitar } from '../types/guitar';
+import { ApiPath} from '../const';
 import {toast} from 'react-toastify';
+import moment from 'moment';
 
 type GuitarsActionProps = {
   sortType: string | null,
@@ -15,22 +16,46 @@ type GuitarsActionProps = {
   strings: number[],
 }
 
+type IndexLikeString = {
+  index: number,
+  guitar: Guitar
+}
+
+
 const AUTH_FAIL_MESSAGE = 'Сервер не загружен';
 
-export const fetchCommentsCountAction = (id: number): ThunkActionResult =>
+export const fetchCommentsAction = (id: number, start: number, end: number): ThunkActionResult =>
   async (dispatch, _getState, api) => {
+    dispatch(checkingLoadComments(false));
+    const sortAsc = (a: Comment, b : Comment) => moment(b.createAt).valueOf() - moment(a.createAt).valueOf();
     try {
       const {data} = await api.get<Comment[]>(ApiPath.Guitars+String(id)+ApiPath.Comments);
+      if (start === null || end === null){
+        dispatch(loadComments(data.sort(sortAsc)));
+      }
+      else{
+        dispatch(loadComments(data.sort(sortAsc).slice(start, end)));
+      }
+
       dispatch(loadCommentsCount(id, data.length));
+      dispatch(checkingLoadComments(true));
     } catch {
       toast.info(AUTH_FAIL_MESSAGE);
     }
   };
 
-  type IndexLikeString = {
-    index: number,
-    guitar: Guitar
-  }
+export const fetchCommentsCountAction = (id: number): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+
+    dispatch(checkingLoadData(false));
+    try {
+      const {data} = await api.get<Comment[]>(ApiPath.Guitars+String(id)+ApiPath.Comments);
+      dispatch(loadCommentsCount(id, data.length));
+      dispatch(checkingLoadData(true));
+    } catch {
+      toast.info(AUTH_FAIL_MESSAGE);
+    }
+  };
 
 export const fetchLikeGuitarsAction = (likeString:string): ThunkActionResult =>
   async (dispatch, _getState, api) => {
@@ -44,6 +69,7 @@ export const fetchLikeGuitarsAction = (likeString:string): ThunkActionResult =>
       toast.info(AUTH_FAIL_MESSAGE);
     }
   };
+
 
 const getApiFilterSortLimit = (props: GuitarsActionProps) => {
 
@@ -76,6 +102,11 @@ export const fetchGuitarsAction = (props: GuitarsActionProps): ThunkActionResult
       const {filter, sort} = getApiFilterSortLimit(props);
       const data = (await api.get<Guitar[]>(`${ApiPath.Guitars}?${filter}${sort}`)).data;
 
+      data.forEach(async (guitar) => {
+        const comments = (await api.get<Guitar[]>(ApiPath.Guitars+String(guitar.id)+ApiPath.Comments)).data;
+        dispatch(loadCommentsCount(guitar.id, comments?.length));
+      });
+
       if (start === null || end === null){
         dispatch(loadPageGuitars(data));
       }
@@ -92,6 +123,16 @@ export const fetchGuitarsAction = (props: GuitarsActionProps): ThunkActionResult
 
   };
 
+export const fetchGuitarAction = (id: number): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    try {
+      const data = (await api.get<Guitar>(ApiPath.Guitars+id)).data;
+      dispatch(loadGuitar(data));
+    } catch {
+      toast.info(AUTH_FAIL_MESSAGE);
+    }
+  };
+
 export const fetchMinMaxAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {  try {
     const data = (await api.get<Guitar[]>(ApiPath.Guitars)).data;
@@ -102,4 +143,10 @@ export const fetchMinMaxAction = (): ThunkActionResult =>
   } catch {
     toast.info(AUTH_FAIL_MESSAGE);
   }};
+
+export const addReviewAction = (comment : CommentPost): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    const {status} = await api.post<Comment[]>(ApiPath.Comments, comment);
+    dispatch(addReview(status));
+  };
 

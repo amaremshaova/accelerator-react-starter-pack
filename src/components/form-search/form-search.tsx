@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
@@ -11,6 +11,7 @@ function FormSearch() : JSX.Element{
   const likeGuitars = useSelector(getLikeGuitars);
 
   const [likeString, setLikeString] = useState('');
+  const searchRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     if (likeString !== '')
@@ -28,10 +29,12 @@ function FormSearch() : JSX.Element{
           </svg><span className="visually-hidden">Начать поиск</span>
         </button>
         <input
+          ref={searchRef}
           className="form-search__input"
           data-testid="search"
           id="search"
           type="text"
+          value={ likeString === '' ? '' : searchRef.current?.value}
           autoComplete="off"
           placeholder="что вы ищете?"
           onChange={(evt) => setLikeString(evt.target.value)}
@@ -47,8 +50,9 @@ function FormSearch() : JSX.Element{
               className="form-search__select-item"
               tabIndex={0}
               key={guitar.id + guitar.name}
+              onClick={()=> setLikeString('')}
             >
-              <Link className ="form-search__link-guitar" to={AppRoute.Guitar+guitar.id}>{guitar.name}</Link>
+              <Link className ="form-search__link-guitar" to={AppRoute.Catalog+guitar.id}>{guitar.name}</Link>
             </li>)) : ''}
       </ul>
     </div>

@@ -1,0 +1,460 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: ProductPage should render correctly 1`] = `
+<div>
+  <header
+    class="header"
+    id="header"
+  >
+    <div
+      class="container header__wrapper"
+    >
+      <a
+        class="header__logo logo"
+        href="/catalog/1"
+      >
+        <img
+          alt="Логотип"
+          class="logo__img"
+          height="70"
+          src="./img/svg/logo.svg"
+          width="70"
+        />
+      </a>
+      <nav
+        class="main-nav"
+      >
+        <ul
+          class="main-nav__list"
+        >
+          <li>
+            <a
+              class="link main-nav__link"
+              href="/catalog/1"
+            >
+              Каталог
+            </a>
+          </li>
+          <li>
+            <a
+              class="link main-nav__link"
+              href="/catalog/1"
+            >
+              Где купить?
+            </a>
+          </li>
+          <li>
+            <a
+              class="link main-nav__link"
+              href="/catalog/1"
+            >
+              О компании
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div
+        class="form-search"
+      >
+        <form
+          class="form-search__form"
+          data-testid="form-search__form"
+        >
+          <button
+            class="form-search__submit"
+            type="submit"
+          >
+            <svg
+              aria-hidden="true"
+              class="form-search__icon"
+              height="15"
+              width="14"
+            >
+              <use
+                href="#icon-search"
+              />
+            </svg>
+            <span
+              class="visually-hidden"
+            >
+              Начать поиск
+            </span>
+          </button>
+          <input
+            autocomplete="off"
+            class="form-search__input"
+            data-testid="search"
+            id="search"
+            placeholder="что вы ищете?"
+            type="text"
+            value=""
+          />
+          <label
+            class="visually-hidden"
+            for="search"
+          >
+            Поиск
+          </label>
+        </form>
+        <ul
+          class="form-search__select-list
+        hidden"
+        >
+          <li
+            class="form-search__select-item"
+            tabindex="0"
+          >
+            <a
+              class="form-search__link-guitar"
+              href="/catalog/1"
+            >
+              Честер Bass
+            </a>
+          </li>
+          <li
+            class="form-search__select-item"
+            tabindex="0"
+          >
+            <a
+              class="form-search__link-guitar"
+              href="/catalog/2"
+            >
+              Честер Z300
+            </a>
+          </li>
+        </ul>
+      </div>
+      <a
+        aria-label="Корзина"
+        class="header__cart-link"
+        href="/cart"
+      >
+        <svg
+          aria-hidden="true"
+          class="header__cart-icon"
+          height="14"
+          width="14"
+        >
+          <use
+            href="#icon-basket"
+          />
+        </svg>
+        <span
+          class="visually-hidden"
+        >
+          Перейти в корзину
+        </span>
+        <span
+          class="header__cart-count"
+        >
+          2
+        </span>
+      </a>
+    </div>
+  </header>
+  <main
+    class="page-content"
+  >
+    <div
+      class="container"
+    >
+      <h1
+        class="page-content__title title title--bigger"
+      />
+      <ul
+        class="breadcrumbs page-content__breadcrumbs"
+      >
+        <li
+          class="breadcrumbs__item"
+        >
+          <a
+            class="link"
+            href="/catalog/1"
+          >
+            Главная
+          </a>
+        </li>
+        <li
+          class="breadcrumbs__item"
+        >
+          <a
+            class="link"
+            href="/catalog/page_1"
+          >
+            Каталог
+          </a>
+        </li>
+      </ul>
+      <p
+        style="margin-top: 200px; font-size: 30px;"
+      >
+        Загрузка информации о товаре...
+      </p>
+      <section
+        class="reviews"
+      >
+        <h3
+          class="reviews__title title title--bigger"
+        >
+          Отзывы
+        </h3>
+        <a
+          class="button button--red-border button--big reviews__sumbit-button"
+          href="#"
+        >
+          Оставить отзыв
+        </a>
+        <p
+          style="margin-top: 200px; font-size: 30px;"
+        >
+          Загрузка отзывов...
+        </p>
+        
+        
+      </section>
+    </div>
+  </main>
+  <footer
+    class="footer"
+  >
+    <div
+      class="footer__container container"
+    >
+      <a
+        class="footer__logo logo"
+        href="#"
+      >
+        <img
+          alt="Логотип"
+          class="logo__img"
+          height="70"
+          src="./img/svg/logo.svg"
+          width="70"
+        />
+      </a>
+      <div
+        class="socials footer__socials"
+      >
+        <ul
+          class="socials__list"
+        >
+          <li
+            class="socials-item"
+          >
+            <a
+              aria-label="facebook"
+              class="socials__link"
+              href="https://www.facebook.com/"
+            >
+              <svg
+                aria-hidden="true"
+                class="socials__icon"
+                height="24"
+                width="24"
+              >
+                <use
+                  href="#icon-facebook"
+                />
+              </svg>
+            </a>
+          </li>
+          <li
+            class="socials-item"
+          >
+            <a
+              aria-label="instagram"
+              class="socials__link"
+              href="https://www.instagram.com/"
+            >
+              <svg
+                aria-hidden="true"
+                class="socials__icon"
+                height="24"
+                width="24"
+              >
+                <use
+                  href="#icon-instagram"
+                />
+              </svg>
+            </a>
+          </li>
+          <li
+            class="socials-item"
+          >
+            <a
+              aria-label="twitter"
+              class="socials__link"
+              href="https://www.twitter.com/"
+            >
+              <svg
+                aria-hidden="true"
+                class="socials__icon"
+                height="24"
+                width="24"
+              >
+                <use
+                  href="#icon-twitter"
+                />
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <section
+        class="footer__nav-section footer__nav-section--info"
+      >
+        <h2
+          class="footer__nav-title"
+        >
+          О нас
+        </h2>
+        <p
+          class="footer__nav-content footer__nav-content--font-secondary"
+        >
+          Магазин гитар, музыкальных инструментов и гитарная мастерская 
+          <br />
+           в Санкт-Петербурге.
+          <br />
+          <br />
+          Все инструменты проверены, отстроены 
+          <br />
+           и доведены до идеала!
+        </p>
+      </section>
+      <section
+        class="footer__nav-section footer__nav-section--links"
+      >
+        <h2
+          class="footer__nav-title"
+        >
+          Информация
+        </h2>
+        <ul
+          class="footer__nav-list"
+        >
+          <li
+            class="footer__nav-list-item"
+          >
+            <a
+              class="link"
+              href="#top"
+            >
+              Где купить?
+            </a>
+          </li>
+          <li
+            class="footer__nav-list-item"
+          >
+            <a
+              class="link"
+              href="#top"
+            >
+              Блог
+            </a>
+          </li>
+          <li
+            class="footer__nav-list-item"
+          >
+            <a
+              class="link"
+              href="#top"
+            >
+              Вопрос - ответ
+            </a>
+          </li>
+          <li
+            class="footer__nav-list-item"
+          >
+            <a
+              class="link"
+              href="#top"
+            >
+              Возврат
+            </a>
+          </li>
+          <li
+            class="footer__nav-list-item"
+          >
+            <a
+              class="link"
+              href="#top"
+            >
+              Сервис-центры
+            </a>
+          </li>
+        </ul>
+      </section>
+      <section
+        class="footer__nav-section footer__nav-section--contacts"
+      >
+        <h2
+          class="footer__nav-title"
+        >
+          Контакты
+        </h2>
+        <p
+          class="footer__nav-content"
+        >
+          Санкт-Петербург
+          ,
+          <br />
+          м. Невский проспект
+          ,  
+          <br />
+          ул. Казанская 6
+        </p>
+        <div
+          class="footer__nav-content"
+        >
+          <svg
+            aria-hidden="true"
+            class="footer__icon"
+            height="8"
+            width="8"
+          >
+            <use
+              href="#icon-phone"
+            />
+          </svg>
+          <a
+            class="link"
+            href="tel:8-812-500-50-50"
+          >
+            8-812-500-50-50
+             
+          </a>
+        </div>
+        <p
+          class="footer__nav-content"
+        >
+          Режим работы:
+          <br />
+          <span
+            class="footer__span"
+          >
+            <svg
+              aria-hidden="true"
+              class="footer__icon"
+              height="13"
+              width="13"
+            >
+              <use
+                href="#icon-clock"
+              />
+            </svg>
+            <span>
+              с 11:00 до 20:00
+               
+            </span>
+            <span>
+              без выходных
+            </span>
+          </span>
+        </p>
+      </section>
+    </div>
+  </footer>
+  
+  
+</div>
+`;

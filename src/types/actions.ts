@@ -14,9 +14,12 @@ export enum ActionType {
   LoadPageGuitars = 'data/loadPageGuitars',
   LoadGuitarsCount = 'data/loadGuitarsCount',
   LoadLikeGuitars = 'data/loadLikeGuitars',
+  LoadComments = 'data/loadComments',
   LoadCommentsCount = 'data/loadCommentsCount',
   LoadMinMaxPrice = 'data/loadMinMaxPrice',
   CheckingLoadData = 'data/checkingLoadData',
+  CheckingLoadComments = 'data/checkingLoadComments',
+  AddReview = 'data/addReview',
 }
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Action>;

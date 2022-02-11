@@ -45,7 +45,7 @@ describe('Component: FormSearch', () => {
 
     userEvent.click(screen.getAllByRole('link')[0]);
 
-    expect(history.location.pathname ===`${AppRoute.Guitar+1}`).toBeTruthy();
+    expect(history.location.pathname ===`${AppRoute.Catalog+1}`).toBeTruthy();
   });
 
 });

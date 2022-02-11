@@ -1332,6 +1332,11 @@ button,
   background-color: #ffffff;
 }
 
+.button:focus {
+  color: #131212;
+  background-color: #ffffff;
+}
+
 .button--mini {
   font-size: 12px;
 

@@ -18,7 +18,7 @@ describe('Component: StarIcon', () => {
     render(
       <Router navigator={history} location={history.location}>
         <Routes>
-          <Route path={AppRoute.Catalog} element={<StarIcon percent={percent} id={String(id)}/>}/>
+          <Route path={AppRoute.Catalog} element={<StarIcon percent={percent} id={String(id)} width={0} height={0}/>}/>
         </Routes>
       </Router>,
     );

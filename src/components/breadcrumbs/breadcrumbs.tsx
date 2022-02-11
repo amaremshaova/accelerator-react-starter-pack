@@ -1,15 +1,22 @@
-import { AppRoute } from '../../const';
 import { Link } from 'react-router-dom';
+import { BreadCrumbsType } from '../../types/breadcrumb';
 
-function BreadCrumbs():JSX.Element{
+type BreadCrumbsProps = {
+  crumbs: BreadCrumbsType[]
+}
+
+function BreadCrumbs({crumbs}: BreadCrumbsProps):JSX.Element{
   return(
     <ul className='breadcrumbs page-content__breadcrumbs'>
-      <li className='breadcrumbs__item'>
-        <Link className='link' to={AppRoute.Main}>Главная</Link>
-      </li>
-      <li className='breadcrumbs__item'>
-        <Link className='link' to={AppRoute.Empty} >Каталог</Link>
-      </li>
+      {
+        crumbs.map((crumb) =>
+          (
+            <li className='breadcrumbs__item' key = {crumb.name}>
+              <Link className='link' to={crumb.link}>{crumb.name}</Link>
+            </li>
+          ),
+        )
+      }
     </ul>
   );
 }

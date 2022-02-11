@@ -6,7 +6,7 @@ import Sorting from '../sorting/sorting';
 import Pagination from '../pagination/pagination';
 import { useEffect, useState } from 'react';
 import {useLocation, useParams, useSearchParams } from 'react-router-dom';
-import {fetchCommentsCountAction, fetchGuitarsAction } from '../../store/api-actions';
+import {fetchGuitarsAction } from '../../store/api-actions';
 import { COUNT_CARDS } from '../catalog/catalog';
 import LoadingScreen from '../loading-screen/loading-screen';
 
@@ -19,6 +19,8 @@ export enum SortOrder {
   Up = 'asc',
   Down = 'desc'
 }
+
+const TEXT_LOADING = 'Загрузка товаров...';
 
 
 function ProductList():JSX.Element{
@@ -61,12 +63,6 @@ function ProductList():JSX.Element{
   }, [history.search]);
 
   useEffect(() => {
-    guitars.forEach((guitar) =>
-      dispatch(fetchCommentsCountAction(guitar.id)));
-  }, [dispatch, guitars]);
-
-  useEffect(() => {
-
     dispatch(fetchGuitarsAction(
       {
         sortType: sortType,
@@ -78,6 +74,7 @@ function ProductList():JSX.Element{
         types: guitarsTypes,
         strings: stringsCount,
       }));
+
 
   }, [dispatch,
     minPriceInput,
@@ -115,8 +112,8 @@ function ProductList():JSX.Element{
       <div className="cards catalog__cards">
         {
           isLoadData ? guitars.map((guitar) =>
-            <ProductCard key={guitar.id} product={guitar}/>,
-          ) :  <LoadingScreen/>
+            <ProductCard key={guitar.id} product={guitar} />,
+          ) :  <LoadingScreen textLoading={TEXT_LOADING}/>
         }
       </div>
       <Pagination pageActive={page} onSetPage = {setPage}/>

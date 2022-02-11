@@ -3,10 +3,14 @@ import { AppRoute } from '../../const';
 import FormSearch from '../form-search/form-search';
 
 const CART_COUNT = 2;
+
 function Header():JSX.Element{
 
   return(
-    <header className="header" id="header">
+    <header
+      className="header"
+      id="header"
+    >
       <div className="container header__wrapper">
         <Link className="header__logo logo" to={AppRoute.Main}>
           <img className="logo__img" width="70" height="70" src="./img/svg/logo.svg" alt="Логотип"/>

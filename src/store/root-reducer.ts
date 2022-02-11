@@ -1,4 +1,5 @@
 import {combineReducers} from 'redux';
+import { appProcess } from './app-process/app-process';
 import { guitarData } from './guitar-data/guitar-data';
 
 export enum NameSpace {
@@ -8,6 +9,7 @@ export enum NameSpace {
 
 export const rootReducer = combineReducers({
   [NameSpace.Data]: guitarData,
+  [NameSpace.App]: appProcess,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

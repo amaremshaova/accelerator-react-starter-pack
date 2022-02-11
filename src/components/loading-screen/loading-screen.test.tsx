@@ -3,7 +3,7 @@ import LoadingScreen from './loading-screen';
 
 describe('Component: LoadingScreen', () => {
   it('should render correctly', () => {
-    render(<LoadingScreen />);
+    render(<LoadingScreen textLoading={'Loading'}/>);
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
   });
 });
