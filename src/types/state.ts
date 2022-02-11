@@ -16,7 +16,7 @@ export type GuitarData = {
   commentsCount: CommentCountType[],
   isLoadData: boolean,
   isLoadComments: boolean,
-  activeGuitar: Guitar
+  activeGuitar: Guitar | undefined
 };
 
 export type AppProcess = {

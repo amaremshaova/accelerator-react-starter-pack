@@ -107,7 +107,7 @@ function ReviewList({ isOpenModalSuccessReview, onSetOpenModalReview} : ReviewLi
           : ''
       }
       {
-        ( window.scrollY > 0) ?
+        ( window.scrollY > 0 && comments) ?
           <a className="button button--up button--red-border button--big reviews__up-button"
             href="#header"
             style={{zIndex: '100'}}

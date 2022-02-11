@@ -1,5 +1,4 @@
 import {createReducer} from '@reduxjs/toolkit';
-import { GuitarType } from '../../components/filters/filters';
 import { GuitarData } from '../../types/state';
 
 import {loadGuitarsCount,
@@ -12,23 +11,9 @@ import {loadGuitarsCount,
   loadGuitar,
   checkingLoadComments} from '../actions';
 
-
-export const initialActiveGuitar = {
-  id : 0,
-  name: '',
-  vendorCode: '',
-  type: GuitarType.Acoustic,
-  description: '',
-  previewImg: '',
-  stringCount: 0,
-  rating: 0,
-  price: 0,
-};
-
-
 const initialState: GuitarData = {
   guitars: [],
-  activeGuitar: initialActiveGuitar,
+  activeGuitar: undefined,
   likeGuitars: [],
   guitarsCount: 0,
   minPrice: null,

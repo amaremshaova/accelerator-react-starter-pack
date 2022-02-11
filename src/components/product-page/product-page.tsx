@@ -77,7 +77,7 @@ function ProductPage():JSX.Element{
       </main>
       <Footer/>
       {
-        isOpenModalReview ?
+        isOpenModalReview && guitar?
           <ModalReview
             product = {guitar}
             onSetOpenModalReview={setOpenModalReview}

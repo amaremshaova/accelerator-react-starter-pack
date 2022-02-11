@@ -2,14 +2,14 @@ import { MouseEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRoute } from '../../const';
 import { fetchCommentsCountAction } from '../../store/api-actions';
-import { getCommentsCount, getIsLoadData } from '../../store/guitar-data/selectors';
+import { getCommentsCount} from '../../store/guitar-data/selectors';
 import { Guitar } from '../../types/guitar';
 import { GuitarTypeRU } from '../filters/filters';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Rating from '../rating/rating';
 
 type ProductInfoProps = {
-  product: Guitar
+  product: Guitar | undefined
 }
 
 const enum Tab {
@@ -33,15 +33,17 @@ function ProductInfo({product} : ProductInfoProps) : JSX.Element {
     setActiveTab(tab);
   };
 
-  const isLoad = useSelector(getIsLoadData);
+  const isLoad = product !== undefined;
 
   const dispatch = useDispatch();
   const commentsCount = useSelector(getCommentsCount).filter((item) => item.id === product?.id)[0]?.count;
 
 
   useEffect(() => {
-    dispatch(fetchCommentsCountAction(product?.id));
-  }, [dispatch, product?.id]);
+    if (product) {
+      dispatch(fetchCommentsCountAction(product.id));
+    }
+  }, [dispatch, product]);
 
 
   return (

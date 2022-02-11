@@ -23,6 +23,8 @@ const INITIAL_FETCH = {
   isLoadData: false,
 };
 
+
+const LIMIT_MESSAGES = 1;
 const api = createAPI();
 
 const store = configureStore({
@@ -42,7 +44,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store = {store}>
       <BrowserRouter >
-        <ToastContainer limit ={1}/>
+        <ToastContainer limit ={LIMIT_MESSAGES}/>
         <App />
       </BrowserRouter>
     </Provider>
