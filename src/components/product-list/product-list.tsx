@@ -62,6 +62,7 @@ function ProductList():JSX.Element{
     }
   }, [history.search]);
 
+
   useEffect(() => {
     dispatch(fetchGuitarsAction(
       {
@@ -122,5 +123,3 @@ function ProductList():JSX.Element{
 }
 
 export default ProductList;
-
-

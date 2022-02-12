@@ -2,15 +2,14 @@ import MockAdapter from 'axios-mock-adapter';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import { ApiPath } from '../const';
 import { guitars, maxPrice, minPrice } from '../utils/mocks/guitars';
-import {changeStatus, checkingLoadComments, checkingLoadData, loadComments, loadCommentsCount, loadGuitar, loadGuitarsCount, loadLikeGuitars, loadMinMaxPrice, loadPageGuitars} from './actions';
-import { addReviewAction, fetchCommentsAction, fetchCommentsCountAction, fetchGuitarAction, fetchGuitarsAction, fetchLikeGuitarsAction, fetchMinMaxAction } from './api-actions';
+import {changeStatus, checkingLoadComments, checkingLoadData, loadComments, loadCommentsCount, loadGuitar, loadLikeGuitars, loadMinMaxPrice} from './actions';
+import { addReviewAction, fetchCommentsAction, fetchCommentsCountAction, fetchGuitarAction, fetchLikeGuitarsAction, fetchMinMaxAction } from './api-actions';
 import { State } from '../types/state';
 import { Action} from '@reduxjs/toolkit';
 import {createAPI} from '../services/api';
 import thunk, {ThunkDispatch} from 'redux-thunk';
 import { comments } from '../utils/mocks/comments';
-import { SortOrder, SortType } from '../components/product-list/product-list';
-import { waitFor } from '@testing-library/react';
+
 
 describe('Async actions', () => {
   const api = createAPI();
@@ -23,54 +22,6 @@ describe('Async actions', () => {
   ThunkDispatch<State, typeof api, Action>
 >(middlewares);
 
-  it('should dispatch Load_Page_Guitars when GET /guitars', async () => {
-    const mockGuitars = guitars;
-
-    const props = {
-      sortType: SortType.Price,
-      order: SortOrder.Up,
-      start: 0,
-      end: 9,
-      min: 2000,
-      max: 5000,
-      types: [],
-      strings: [4],
-    };
-
-
-    const {
-      sortType,
-      order,
-      min,
-      max,
-      types,
-      strings,
-    } = props;
-
-    let typeFilter = types.length !== 0 ? types.map((item) => `type=${item}`).join('&') : '';
-    typeFilter = typeFilter !== '' ? `&${typeFilter}` : '';
-
-    let priceFilter = (min !== 0) && (max !== 0) ? `price_gte=${min}&price_lte=${max}` : '';
-    priceFilter = priceFilter !== '' ? `&${priceFilter}` : '';
-
-    let stringsCountFilter = strings.length !== 0 ? strings.map((item) => `stringCount=${item}`).join('&') : '';
-    stringsCountFilter = stringsCountFilter !== '' ? `&${stringsCountFilter}` : '';
-
-    const filter = `${  typeFilter  }${stringsCountFilter  }${priceFilter}`;
-    const sort = sortType !== null ? `&_sort=${sortType}&_order=${order}` : '';
-
-    mockAPI
-      .onGet(`${ApiPath.Guitars}?${filter}${sort}`)
-      .reply(200, mockGuitars);
-
-
-    const store = mockStore();
-    await waitFor(() =>store.dispatch(fetchGuitarsAction(props)));
-
-    expect(store.getActions()).toEqual([ checkingLoadData(false),
-      loadPageGuitars(mockGuitars), loadGuitarsCount(mockGuitars.length),checkingLoadData(true),
-    ]);
-  });
 
   it('should dispatch Load_Comments_Count when GET /guitars/1/comments', async () => {
     const mockComments = comments;
