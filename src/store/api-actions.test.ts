@@ -2,13 +2,15 @@ import MockAdapter from 'axios-mock-adapter';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import { ApiPath } from '../const';
 import { guitars, maxPrice, minPrice } from '../utils/mocks/guitars';
-import {changeStatus, checkingLoadComments, checkingLoadData, loadComments, loadCommentsCount, loadGuitar, loadLikeGuitars, loadMinMaxPrice} from './actions';
-import { addReviewAction, fetchCommentsAction, fetchCommentsCountAction, fetchGuitarAction, fetchLikeGuitarsAction, fetchMinMaxAction } from './api-actions';
+import {changeStatus, checkingLoadComments, checkingLoadData, loadComments, loadCommentsCount, loadGuitar, loadGuitarsCount, loadLikeGuitars, loadMinMaxPrice, loadPageGuitars} from './actions';
+import { addReviewAction, fetchCommentsAction, fetchCommentsCountAction, fetchGuitarAction, fetchGuitarsAction, fetchLikeGuitarsAction, fetchMinMaxAction } from './api-actions';
 import { State } from '../types/state';
 import { Action} from '@reduxjs/toolkit';
 import {createAPI} from '../services/api';
 import thunk, {ThunkDispatch} from 'redux-thunk';
 import { comments } from '../utils/mocks/comments';
+import { SortOrder, SortType } from '../components/product-list/product-list';
+import { waitFor } from '@testing-library/react';
 
 describe('Async actions', () => {
   const api = createAPI();
@@ -21,7 +23,7 @@ describe('Async actions', () => {
   ThunkDispatch<State, typeof api, Action>
 >(middlewares);
 
-  /*it('should dispatch Load_Page_Guitars when GET /guitars', async () => {
+  it('should dispatch Load_Page_Guitars when GET /guitars', async () => {
     const mockGuitars = guitars;
 
     const props = {
@@ -63,12 +65,12 @@ describe('Async actions', () => {
 
 
     const store = mockStore();
-    await store.dispatch(fetchGuitarsAction(props));
+    await waitFor(() =>store.dispatch(fetchGuitarsAction(props)));
 
-    expect(store.getActions()).toEqual([
-      loadPageGuitars(mockGuitars), loadGuitarsCount(mockGuitars.length),
+    expect(store.getActions()).toEqual([ checkingLoadData(false),
+      loadPageGuitars(mockGuitars), loadGuitarsCount(mockGuitars.length),checkingLoadData(true),
     ]);
-  });*/
+  });
 
   it('should dispatch Load_Comments_Count when GET /guitars/1/comments', async () => {
     const mockComments = comments;

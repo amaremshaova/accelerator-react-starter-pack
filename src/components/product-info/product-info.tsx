@@ -1,7 +1,6 @@
-import { MouseEvent, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { MouseEvent, useState } from 'react';
+import {useSelector } from 'react-redux';
 import { AppRoute } from '../../const';
-import { fetchCommentsCountAction } from '../../store/api-actions';
 import { getCommentsCount} from '../../store/guitar-data/selectors';
 import { Guitar } from '../../types/guitar';
 import { GuitarTypeRU } from '../filters/filters';
@@ -34,17 +33,7 @@ function ProductInfo({product} : ProductInfoProps) : JSX.Element {
   };
 
   const isLoad = product !== undefined;
-
-  const dispatch = useDispatch();
   const commentsCount = useSelector(getCommentsCount).filter((item) => item.id === product?.id)[0]?.count;
-
-
-  useEffect(() => {
-    if (product) {
-      return;
-    }
-  }, [dispatch, product]);
-
 
   return (
     isLoad ?

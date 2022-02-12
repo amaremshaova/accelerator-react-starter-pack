@@ -105,8 +105,7 @@ export const fetchGuitarsAction = (props: GuitarsActionProps): ThunkActionResult
       const data = (await api.get<Guitar[]>(`${ApiPath.Guitars}?${filter}${sort}`)).data;
 
       data.forEach(async (guitar) => {
-        const comments = (await api.get<Guitar[]>(ApiPath.Guitars+String(guitar.id)+ApiPath.Comments)).data;
-        dispatch(loadCommentsCount(guitar.id, comments?.length));
+        fetchCommentsCountAction(guitar.id);
       });
 
       if (start === null || end === null){
