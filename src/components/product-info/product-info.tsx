@@ -41,7 +41,7 @@ function ProductInfo({product} : ProductInfoProps) : JSX.Element {
 
   useEffect(() => {
     if (product) {
-      dispatch(fetchCommentsCountAction(product.id));
+      return;
     }
   }, [dispatch, product]);
 

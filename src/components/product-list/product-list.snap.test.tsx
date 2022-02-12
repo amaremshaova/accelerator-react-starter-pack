@@ -1,6 +1,5 @@
 import {render} from '@testing-library/react';
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import ProductList from './product-list';
+import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { guitars, maxPrice, minPrice } from '../../utils/mocks/guitars';
 import { commentsCountArray } from '../../utils/mocks/comments';
@@ -8,6 +7,9 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { AppRoute } from '../../const';
 import { createMemoryHistory } from 'history';
 import thunk from 'redux-thunk';
+import Catalog from '../catalog/catalog';
+import ProductPage from '../product-page/product-page';
+import NotFoundPage from '../not-found-page/not-found-page';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -24,12 +26,15 @@ const history = createMemoryHistory();
 
 describe('Component: ProductList', () => {
   it('should render correctly', () => {
-    history.push(AppRoute.Catalog);
+    history.push(AppRoute.Catalog + 1);
     const {container} = render(
       <Provider store = {store}>
         <BrowserRouter>
           <Routes>
-            <Route path={AppRoute.Catalog} element={ <ProductList />}/>
+            <Route path={AppRoute.Root} element={<Navigate to={AppRoute.CatalogStartPage} />}/>
+            <Route path={`${AppRoute.CatalogPage  }:id`} element={<Catalog />}/>
+            <Route path={`${AppRoute.Catalog  }:id`} element={<ProductPage />}/>
+            <Route path={AppRoute.Undefined} element={<NotFoundPage/>}/>
           </Routes>
         </BrowserRouter>
       </Provider>,

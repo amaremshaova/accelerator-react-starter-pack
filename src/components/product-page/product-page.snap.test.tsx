@@ -23,10 +23,13 @@ const store = mockStore({
 
 const history = createMemoryHistory();
 
+
 describe('Component: ProductPage', () => {
   it('should render correctly', () => {
 
     history.push(AppRoute.Catalog + 1);
+
+    window.scroll = jest.fn(()=>'w');
 
     const {container} = render(
       <Provider store = {store}>

@@ -66,8 +66,8 @@ export const checkingLoadComments = createAction(
   }),
 );
 
-export const addReview = createAction(
-  ActionType.AddReview,
+export const changeStatus = createAction(
+  ActionType.ChangeStatus,
   (status: number) => ({
     payload: {status},
   }),

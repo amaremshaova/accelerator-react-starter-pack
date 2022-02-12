@@ -31,10 +31,14 @@ const fakeApp = ()=>(
   </Provider>
 );
 
+window.scroll = jest.fn(()=>'w');
+
 describe('Application Routing', () => {
 
   it('should render "Catalog" when user navigate to "/catalog/page_id', () => {
     history.push(AppRoute.CatalogStartPage);
+    window.scrollTo = jest.fn();
+    window.scrollTo();
 
     render(fakeApp());
     expect(screen.getByText(/Каталог гитар/i)).toBeInTheDocument();

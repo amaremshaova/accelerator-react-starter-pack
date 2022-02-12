@@ -13,7 +13,7 @@ export enum AppRoute {
   Empty = '#',
   CatalogStartPage = '/catalog/page_1',
   Cart = '/cart',
-  Undefined = '*',
-  Root = '/'
+  Undefined = '/*',
+  Root = '/',
 }
 

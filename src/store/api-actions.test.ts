@@ -2,7 +2,7 @@ import MockAdapter from 'axios-mock-adapter';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import { ApiPath } from '../const';
 import { guitars, maxPrice, minPrice } from '../utils/mocks/guitars';
-import { addReview, checkingLoadComments, checkingLoadData, loadComments, loadCommentsCount, loadGuitar, loadLikeGuitars, loadMinMaxPrice} from './actions';
+import {changeStatus, checkingLoadComments, checkingLoadData, loadComments, loadCommentsCount, loadGuitar, loadLikeGuitars, loadMinMaxPrice} from './actions';
 import { addReviewAction, fetchCommentsAction, fetchCommentsCountAction, fetchGuitarAction, fetchLikeGuitarsAction, fetchMinMaxAction } from './api-actions';
 import { State } from '../types/state';
 import { Action} from '@reduxjs/toolkit';
@@ -137,7 +137,7 @@ describe('Async actions', () => {
     await store.dispatch(addReviewAction(mockComment));
 
     expect(store.getActions()).toEqual([
-      addReview(200),
+      changeStatus(200),
     ]);
   });
 

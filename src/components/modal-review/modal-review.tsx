@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addReview} from '../../store/actions';
+import { changeStatus} from '../../store/actions';
 import { addReviewAction } from '../../store/api-actions';
 import { getResponseStatus } from '../../store/app-process/selectors';
 import { getComments} from '../../store/guitar-data/selectors';
@@ -51,8 +51,8 @@ function ModalReview({product, onSetOpenModalReview, onSetOpenModalSuccessReview
       guitarId: product.id,
     });
 
-  const [isRating, setIsRating] = useState(true);
-  const [isName, setIsName] = useState(true);
+  const [isRating, setIsRating] = useState(false);
+  const [isName, setIsName] = useState(false);
 
   const status = useSelector(getResponseStatus);
   const comments = useSelector(getComments);
@@ -60,8 +60,6 @@ function ModalReview({product, onSetOpenModalReview, onSetOpenModalSuccessReview
 
   const handleFormSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    review.rating === 0 ? setIsRating(false) : setIsRating(true);
-    review.userName === '' ? setIsName(false) : setIsName(true);
     if (isRating && isName) {
       dispatch(addReviewAction(review));
     }
@@ -84,7 +82,7 @@ function ModalReview({product, onSetOpenModalReview, onSetOpenModalSuccessReview
     if (status === SUCCESS_STATUS) {
       onSetOpenModalReview(false);
       onSetOpenModalSuccessReview(true);
-      dispatch(addReview(INITIAL_STATUS));
+      dispatch(changeStatus(INITIAL_STATUS));
     }
   }, [status, comments, onSetOpenModalReview, onSetOpenModalSuccessReview, dispatch]);
 
@@ -106,13 +104,17 @@ function ModalReview({product, onSetOpenModalReview, onSetOpenModalSuccessReview
                 <div className="form-review__name-wrapper">
                   <label className="form-review__label form-review__label--required" htmlFor="user-name">Ваше Имя</label>
                   <input className="form-review__input form-review__input--name"
+                    ref={nameRef}
                     autoFocus
                     data-testid="name"
                     tabIndex={1}
                     id="user-name"
                     type="text"
                     autoComplete="off"
-                    onChange={({target}: ChangeEvent<HTMLInputElement>) => setReview({...review, userName: target.value})}
+                    onChange={({target}: ChangeEvent<HTMLInputElement>) => {
+                      setReview({...review, userName: target.value});
+                      target.value === '' ? setIsName(false) : setIsName(true);
+                    }}
                   />
                   {!isName ? <span className="form-review__warning">Заполните поле</span> : ''}
                 </div>
@@ -121,7 +123,10 @@ function ModalReview({product, onSetOpenModalReview, onSetOpenModalSuccessReview
                   <div className="rate rate--reverse">
                     <input
                       className="visually-hidden" type="radio" id="star-5" name="rate" value="5"
-                      onChange={()=>setReview({...review, rating: RatingType.Five})}
+                      onChange={()=>{
+                        setReview({...review, rating: RatingType.Five});
+                        setIsRating(true);
+                      }}
                       checked={review.rating === RatingType.Five}
                     />
                     <label
@@ -135,7 +140,10 @@ function ModalReview({product, onSetOpenModalReview, onSetOpenModalSuccessReview
                     >
                     </label>
                     <input className="visually-hidden" type="radio" id="star-4" name="rate" value="4"
-                      onChange={()=>setReview({...review, rating: RatingType.Four})}
+                      onChange={()=>{
+                        setReview({...review, rating: RatingType.Four});
+                        setIsRating(true);
+                      }}
                       checked={review.rating === RatingType.Four}
                     />
                     <label tabIndex={5} className="rate__label" htmlFor="star-4" title="Хорошо"
@@ -148,7 +156,10 @@ function ModalReview({product, onSetOpenModalReview, onSetOpenModalSuccessReview
                     >
                     </label>
                     <input className="visually-hidden" type="radio" id="star-3" name="rate" value="3"
-                      onChange={()=>setReview({...review, rating: RatingType.Three})}
+                      onChange={()=>{
+                        setReview({...review, rating: RatingType.Three});
+                        setIsRating(true);
+                      }}
                       checked={review.rating === RatingType.Three}
                     />
                     <label
@@ -162,7 +173,10 @@ function ModalReview({product, onSetOpenModalReview, onSetOpenModalSuccessReview
                     >
                     </label>
                     <input className="visually-hidden" type="radio" id="star-2" name="rate" value="2"
-                      onChange={()=>setReview({...review, rating: RatingType.Two})}
+                      onChange={()=>{
+                        setReview({...review, rating: RatingType.Two});
+                        setIsRating(true);
+                      }}
                       checked={review.rating === RatingType.Two}
                     />
                     <label
@@ -176,7 +190,10 @@ function ModalReview({product, onSetOpenModalReview, onSetOpenModalSuccessReview
                     >
                     </label>
                     <input className="visually-hidden" type="radio" id="star-1" name="rate" value="1"
-                      onChange={()=>setReview({...review, rating: RatingType.One})}
+                      onChange={()=>{
+                        setReview({...review, rating: RatingType.One});
+                        setIsRating(true);
+                      }}
                       checked={review.rating === RatingType.One}
                     />
                     <label
@@ -215,7 +232,15 @@ function ModalReview({product, onSetOpenModalReview, onSetOpenModalSuccessReview
                 onChange={({target}: ChangeEvent<HTMLTextAreaElement>) => setReview({...review, comment: target.value})}
               >
               </textarea>
-              <button tabIndex={10} className="button button--medium-20 form-review__button" type="submit">Отправить отзыв</button>
+              <button
+                tabIndex={10}
+                className="button button--medium-20 form-review__button"
+                type="submit"
+                onClick={(evt) => {
+                  evt.currentTarget.blur();
+                }}
+              >Отправить отзыв
+              </button>
             </form>
             <button
               className="modal__close-btn button-cross"

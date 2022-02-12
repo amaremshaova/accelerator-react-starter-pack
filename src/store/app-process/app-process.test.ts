@@ -1,4 +1,4 @@
-import { addReview } from '../actions';
+import { changeStatus } from '../actions';
 import { appProcess } from './app-process';
 
 describe('Reducer: appProcess', () => {
@@ -10,7 +10,7 @@ describe('Reducer: appProcess', () => {
   it('should update status', () => {
     const state = {responseStatus: 0};
 
-    expect(appProcess(state, addReview(200)))
+    expect(appProcess(state, changeStatus(200)))
       .toEqual({responseStatus : 200});
   });
 });

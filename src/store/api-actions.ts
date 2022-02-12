@@ -1,5 +1,7 @@
 import {ThunkActionResult} from '../types/actions';
-import { loadLikeGuitars, loadGuitarsCount, loadCommentsCount, loadPageGuitars, loadMinMaxPrice, checkingLoadData, loadComments, loadGuitar, addReview, checkingLoadComments} from './actions';
+import { loadLikeGuitars, loadGuitarsCount, loadCommentsCount, loadPageGuitars,
+  loadMinMaxPrice, checkingLoadData, loadComments, loadGuitar,
+  checkingLoadComments, changeStatus} from './actions';
 import { Comment, CommentPost, Guitar } from '../types/guitar';
 import { ApiPath} from '../const';
 import {toast} from 'react-toastify';
@@ -130,6 +132,7 @@ export const fetchGuitarAction = (id: number): ThunkActionResult =>
       dispatch(loadGuitar(data));
     } catch {
       toast.info(AUTH_FAIL_MESSAGE);
+      dispatch(changeStatus(404));
     }
   };
 
@@ -146,7 +149,12 @@ export const fetchMinMaxAction = (): ThunkActionResult =>
 
 export const addReviewAction = (comment : CommentPost): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const {status} = await api.post<Comment[]>(ApiPath.Comments, comment);
-    dispatch(addReview(status));
+    try{
+      const {status} = await api.post<Comment[]>(ApiPath.Comments, comment);
+      dispatch(changeStatus(status));
+    } catch {
+      toast.info(AUTH_FAIL_MESSAGE);
+    }
+
   };
 

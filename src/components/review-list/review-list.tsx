@@ -60,6 +60,9 @@ function ReviewList({ isOpenModalSuccessReview, onSetOpenModalReview} : ReviewLi
   useEffect(() => {
     dispatch(fetchCommentsAction(Number(id), 0, renderedReviewsCount));
     dispatch(fetchGuitarAction(Number(id)));
+  }, [dispatch, id,  renderedReviewsCount]);
+
+  useEffect(() => {
     setRenderedCommentsCount(comments?.length);
     if (renderedReviewsCount !== INITIAL_REVIEWS_COUNT){
       setTimeout(() => {

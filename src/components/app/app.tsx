@@ -12,7 +12,7 @@ function App(): JSX.Element {
       <Route path={AppRoute.Root} element={<Navigate to={AppRoute.CatalogStartPage} />}/>
       <Route path={`${AppRoute.CatalogPage  }:id`} element={<Catalog />}/>
       <Route path={`${AppRoute.Catalog  }:id`} element={<ProductPage />}/>
-      <Route  path={AppRoute.Undefined} element={<NotFoundPage/>}/>
+      <Route path={AppRoute.Undefined} element={<NotFoundPage/>}/>
     </Routes>
   );
 }
