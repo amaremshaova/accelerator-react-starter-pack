@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 type ModalSuccessReviewProps = {
   onSetOpenModalSuccessReview: (open: boolean) => void
@@ -11,6 +11,9 @@ function ModalSuccessReview({onSetOpenModalSuccessReview}: ModalSuccessReviewPro
       onSetOpenModalSuccessReview(false);
     }
   };
+
+  const successButton = useRef<HTMLButtonElement | null>(null);
+  const closeButton = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     document.addEventListener('keydown', (evt)=> escFunction(evt));
@@ -38,16 +41,26 @@ function ModalSuccessReview({onSetOpenModalSuccessReview}: ModalSuccessReviewPro
             <p className="modal__message">Спасибо за ваш отзыв!</p>
             <div className="modal__button-container modal__button-container--review">
               <button
+                autoFocus
+                tabIndex={-1}
                 className="button button--small modal__button modal__button--review"
-                onClick={()=>onSetOpenModalSuccessReview(false)}
+                onClick={(evt)=>{
+                  onSetOpenModalSuccessReview(false);
+                  evt.currentTarget.blur();
+                }}
+                ref = {successButton}
+                onBlur={()=>closeButton.current?.focus()}
               >
                 К покупкам!
               </button>
             </div>
             <button className="modal__close-btn button-cross" type="button" aria-label="Закрыть"  data-testid="button-close"
+              tabIndex={-1}
               onClick={()=>{
                 onSetOpenModalSuccessReview(false);
               }}
+              onBlur={()=>successButton.current?.focus()}
+              ref = {closeButton}
             >
               <span className="button-cross__icon"></span>
               <span className="modal__close-btn-interactive-area"></span>

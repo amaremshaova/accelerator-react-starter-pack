@@ -44,15 +44,15 @@ function FormSearch() : JSX.Element{
       <ul className={`form-search__select-list
         ${(likeGuitars.length === 0 )|| likeString === '' ? 'hidden' : ''}`}
       >
-        {likeGuitars.length !== 0 ? likeGuitars.map((guitar) =>
+        {likeGuitars.length !== 0 ? likeGuitars.map((guitar, index) =>
           (
             <li
               className="form-search__select-item"
-              tabIndex={0}
+              tabIndex={-1}
               key={guitar.id + guitar.name}
               onClick={()=> setLikeString('')}
             >
-              <Link className ="form-search__link-guitar" to={AppRoute.Catalog+guitar.id}>{guitar.name}</Link>
+              <Link  tabIndex={0} className ="form-search__link-guitar" to={AppRoute.Catalog+guitar.id}>{guitar.name}</Link>
             </li>)) : ''}
       </ul>
     </div>

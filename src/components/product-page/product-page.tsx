@@ -77,9 +77,6 @@ function ProductPage():JSX.Element{
               setOpenModalSuccessReview(false);
             }
           }
-          if (evt.code === 'Tab'){
-            evt.preventDefault();
-          }
         }}
       >
         <div className="container">
