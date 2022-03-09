@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { fetchLikeGuitarsAction } from '../../store/api-actions';
-import { getLikeGuitars } from '../../store/guitar-data/selectors';
+import { getLikeProducts } from '../../store/product-data/selectors';
 
 function FormSearch() : JSX.Element{
 
   const dispatch = useDispatch();
-  const likeGuitars = useSelector(getLikeGuitars);
+  const likeProducts = useSelector(getLikeProducts);
 
   const [likeString, setLikeString] = useState('');
   const searchRef = useRef<HTMLInputElement | null>(null);
@@ -42,17 +42,17 @@ function FormSearch() : JSX.Element{
         <label className="visually-hidden" htmlFor="search">Поиск</label>
       </form>
       <ul className={`form-search__select-list
-        ${(likeGuitars.length === 0 )|| likeString === '' ? 'hidden' : ''}`}
+        ${(likeProducts && likeProducts.length === 0 )|| likeString === '' ? 'hidden' : ''}`}
       >
-        {likeGuitars.length !== 0 ? likeGuitars.map((guitar, index) =>
+        {likeProducts && likeProducts.length !== 0 ? likeProducts.map((product, index) =>
           (
             <li
               className="form-search__select-item"
               tabIndex={-1}
-              key={guitar.id + guitar.name}
+              key={product.id + product.name}
               onClick={()=> setLikeString('')}
             >
-              <Link  tabIndex={0} className ="form-search__link-guitar" to={AppRoute.Catalog+guitar.id}>{guitar.name}</Link>
+              <Link  tabIndex={0} className ="form-search__link-guitar" to={AppRoute.Catalog+product.id}>{product.name}</Link>
             </li>)) : ''}
       </ul>
     </div>

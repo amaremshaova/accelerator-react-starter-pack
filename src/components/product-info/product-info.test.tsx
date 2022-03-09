@@ -9,6 +9,7 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import ProductInfo from './product-info';
 import { GuitarTypeRU } from '../filters/filters';
 import thunk from 'redux-thunk';
+import userEvent from '@testing-library/user-event';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -28,12 +29,16 @@ describe('Component: ProductInfo', () => {
   it('should render correctly', async () => {
 
     history.push(AppRoute.Catalog + 1);
+    const setOpenModalAdd = jest.fn();
 
     render(
       <Provider store = {store}>
         <Router navigator={history} location={history.location}>
           <Routes>
-            <Route path={AppRoute.Catalog + 1} element={<ProductInfo product={product}/>}/>
+            <Route path={AppRoute.Catalog + 1} element={
+              <ProductInfo product={product} onSetOpenModalAdd={setOpenModalAdd}/>
+            }
+            />
           </Routes>
         </Router>
       </Provider>,
@@ -54,6 +59,8 @@ describe('Component: ProductInfo', () => {
     expect(screen.getByText('Количество струн:')).toBeInTheDocument();
     expect(screen.getByText('Цена:')).toBeInTheDocument();
     expect(screen.getByText('Добавить в корзину')).toBeInTheDocument();
+    userEvent.click(screen.getByText('Добавить в корзину'));
+    expect(setOpenModalAdd).toBeCalled();
 
   });
 

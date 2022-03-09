@@ -19,6 +19,7 @@ const store = mockStore({
     minPrice: minPrice,
     maxPrice: maxPrice,
     commentsCount: commentsCountArray},
+  APP : {productsInCart: [{product: guitars[0], count: 1}]},
 });
 
 const history = createMemoryHistory();
@@ -50,6 +51,19 @@ describe('Application Routing', () => {
     render(fakeApp());
     expect(screen.getByText(/Загрузка информации о товаре.../i)).toBeInTheDocument();
     expect(screen.getByText(/Загрузка отзывов.../i)).toBeInTheDocument();
+  });
+
+  it('should render "Cart Page" when user navigate to "/cart', () => {
+    history.push(AppRoute.Cart);
+
+    render(fakeApp());
+    expect(screen.getByText('Оформить заказ')).toBeInTheDocument();
+  });
+  it('should render "Not Page" when user navigate to "/abc', () => {
+    history.push('abc');
+
+    render(fakeApp());
+    expect(screen.getByText('404.Page not found')).toBeInTheDocument();
   });
 
 

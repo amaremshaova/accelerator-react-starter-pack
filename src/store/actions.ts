@@ -1,6 +1,8 @@
 import {ActionType} from '../types/actions';
-import { Comment, Guitar } from '../types/guitar';
+import { Guitar } from '../types/guitar';
 import {createAction} from '@reduxjs/toolkit';
+import { ProductsInCart } from '../types/cart';
+import { Comment } from '../types/comment';
 
 export const loadPageGuitars = createAction(
   ActionType.LoadPageGuitars,
@@ -59,13 +61,6 @@ export const checkingLoadData = createAction(
   }),
 );
 
-export const checkingLoadComments = createAction(
-  ActionType.CheckingLoadComments,
-  (isLoad: boolean) => ({
-    payload: isLoad,
-  }),
-);
-
 export const changeStatus = createAction(
   ActionType.ChangeStatus,
   (status: number) => ({
@@ -73,3 +68,30 @@ export const changeStatus = createAction(
   }),
 );
 
+export const addProductInCart = createAction(
+  ActionType.AddProductInCart,
+  (product: Guitar) => ({
+    payload: {product},
+  }),
+);
+
+export const changeProductsInCartCount = createAction(
+  ActionType.ChangeProductsInCartCount,
+  (productItem: ProductsInCart) => ({
+    payload: productItem,
+  }),
+);
+
+export const deleteProduct = createAction(
+  ActionType.DeleteProduct,
+  (id : number) => ({
+    payload: id,
+  }),
+);
+
+export const addDiscount = createAction(
+  ActionType.AddDiscount,
+  (discount : number) => ({
+    payload: discount,
+  }),
+);

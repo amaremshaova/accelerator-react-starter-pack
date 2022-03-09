@@ -19,6 +19,7 @@ const store = mockStore({
     minPrice: minPrice,
     maxPrice: maxPrice,
     commentsCount: commentsCountArray},
+  APP : {activeProduct: guitars[0], productsInCart: []},
 });
 
 const history = createMemoryHistory();

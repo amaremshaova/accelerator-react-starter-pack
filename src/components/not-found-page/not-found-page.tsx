@@ -6,7 +6,7 @@ function NotFoundPage():JSX.Element{
     <div>
       <h1> 404.Page not found
       </h1>
-      <Link to={AppRoute.Main} className="not-found-page__link">Вернуться на главную</Link>
+      <Link to={AppRoute.CatalogStartPage} className="not-found-page__link">Вернуться на главную</Link>
     </div>);
 }
 

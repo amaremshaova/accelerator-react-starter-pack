@@ -1,14 +1,15 @@
 import ProductCard from '../product-card/product-card';
 import { useDispatch, useSelector } from 'react-redux';
-import { getGuitars, getMinPrice, getMaxPrice, getIsLoadData} from '../../store/guitar-data/selectors';
+import { getProducts, getMinPrice, getMaxPrice, getIsLoadData} from '../../store/product-data/selectors';
 import Filters from '../filters/filters';
 import Sorting from '../sorting/sorting';
 import Pagination from '../pagination/pagination';
 import { useEffect, useState } from 'react';
 import {useLocation, useParams, useSearchParams } from 'react-router-dom';
 import {fetchGuitarsAction } from '../../store/api-actions';
-import { COUNT_CARDS } from '../catalog/catalog';
+import { COUNT_CARDS } from '../catalog-page/catalog-page';
 import LoadingScreen from '../loading-screen/loading-screen';
+import { Guitar } from '../../types/guitar';
 
 export enum SortType {
   Price = 'price',
@@ -22,10 +23,15 @@ export enum SortOrder {
 
 const TEXT_LOADING = 'Загрузка товаров...';
 
+type ProductListProps = {
+  onSetActiveProduct: (product: Guitar) => void;
+  onSetOpenModalAdd: (open: boolean) => void;
+}
 
-function ProductList():JSX.Element{
 
-  const guitars = useSelector(getGuitars);
+function ProductList({onSetActiveProduct, onSetOpenModalAdd} : ProductListProps):JSX.Element{
+
+  const products = useSelector(getProducts);
   const minPrice = useSelector(getMinPrice);
   const maxPrice = useSelector(getMaxPrice);
   const isLoadData = useSelector(getIsLoadData);
@@ -112,12 +118,16 @@ function ProductList():JSX.Element{
       />
       <div className="cards catalog__cards">
         {
-          isLoadData ? guitars.map((guitar) =>
-            <ProductCard key={guitar.id} product={guitar} />,
+          isLoadData ? products.map((product) =>
+            (
+              <ProductCard key={product.id} product={product}
+                onSetActiveProduct = {onSetActiveProduct}
+                onSetOpenModalAdd = {onSetOpenModalAdd}
+              />),
           ) :  <LoadingScreen textLoading={TEXT_LOADING}/>
         }
       </div>
-      <Pagination pageActive={page} onSetPage = {setPage}/>
+      {isLoadData ? <Pagination pageActive={page} onSetPage = {setPage}/> : ''}
     </div>
   );
 }

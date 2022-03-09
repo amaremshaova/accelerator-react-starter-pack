@@ -1,14 +1,15 @@
 import { MouseEvent, useState } from 'react';
 import {useSelector } from 'react-redux';
 import { AppRoute } from '../../const';
-import { getCommentsCount} from '../../store/guitar-data/selectors';
+import { getCommentsCount} from '../../store/product-data/selectors';
 import { Guitar } from '../../types/guitar';
 import { GuitarTypeRU } from '../filters/filters';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Rating from '../rating/rating';
 
 type ProductInfoProps = {
-  product: Guitar | undefined
+  product: Guitar | undefined,
+  onSetOpenModalAdd:(open: boolean) => void;
 }
 
 const enum Tab {
@@ -23,7 +24,7 @@ const enum RatingProperty {
 
 const TEXT_LOADING = 'Загрузка информации о товаре...';
 
-function ProductInfo({product} : ProductInfoProps) : JSX.Element {
+function ProductInfo({product, onSetOpenModalAdd} : ProductInfoProps) : JSX.Element {
 
   const [activeTab, setActiveTab] = useState<Tab>(Tab.Specifications);
 
@@ -95,7 +96,16 @@ function ProductInfo({product} : ProductInfoProps) : JSX.Element {
           <p className="product-container__price-info product-container__price-info--value">
             {new Intl.NumberFormat('ru').format(product.price)} ₽
           </p>
-          <a className="button button--red button--big product-container__button" href={AppRoute.Empty}>Добавить в корзину</a>
+          <a className="button button--red button--big product-container__button" href={AppRoute.Empty}
+            onClick={(evt) => {
+              evt.preventDefault();
+              evt.currentTarget.blur();
+              onSetOpenModalAdd(true);
+              evt.currentTarget.blur();
+            }}
+          >
+            Добавить в корзину
+          </a>
         </div>
       </div>
       : <LoadingScreen textLoading={TEXT_LOADING}/>

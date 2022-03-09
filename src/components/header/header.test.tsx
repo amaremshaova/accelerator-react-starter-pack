@@ -19,6 +19,7 @@ const store = mockStore({
     minPrice: minPrice,
     maxPrice: maxPrice,
     commentsCount: commentsCountArray},
+  APP : {productsInCart: [{product: guitars[0], count: 1}]},
 });
 
 const history = createMemoryHistory();
@@ -42,6 +43,7 @@ describe('Component: Header', () => {
     expect(screen.getByText('Каталог')).toBeInTheDocument();
     expect(screen.getByText('Где купить?')).toBeInTheDocument();
     expect(screen.getByText('О компании')).toBeInTheDocument();
+    expect(screen.getByText('1')).toBeInTheDocument();
 
     expect(screen.getAllByRole('link')[0]).toHaveClass('header__logo logo');
     expect(screen.getAllByRole('link').filter((item) => item.classList.contains('header__cart-link')))

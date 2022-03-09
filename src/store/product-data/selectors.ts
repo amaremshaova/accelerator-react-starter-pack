@@ -1,11 +1,11 @@
 import { NameSpace } from '../root-reducer';
 import {CommentCountType, State} from '../../types/state';
-import { Guitar, Comment } from '../../types/guitar';
+import { Guitar} from '../../types/guitar';
+import { Comment } from '../../types/comment';
 
-export const getGuitars = (state: State): Guitar[] => state[NameSpace.Data].guitars;
-export const getGuitar = (state: State): Guitar | undefined => state[NameSpace.Data].activeGuitar;
-export const getLikeGuitars = (state: State): Guitar[] => state[NameSpace.Data].likeGuitars;
-export const getGuitarsCount = (state: State): number => state[NameSpace.Data].guitarsCount;
+export const getProducts = (state: State): Guitar[] => state[NameSpace.Data].products;
+export const getLikeProducts = (state: State): Guitar[] => state[NameSpace.Data].likeProducts;
+export const getProductsCount = (state: State): number => state[NameSpace.Data].productsCount;
 export const getMinPrice = (state: State): number | null => state[NameSpace.Data].minPrice;
 export const getMaxPrice = (state: State): number | null => state[NameSpace.Data].maxPrice;
 export const getCommentsCount = (state: State): CommentCountType[] => state[NameSpace.Data].commentsCount;

@@ -7,6 +7,7 @@ import { configureMockStore, MockStore } from '@jedmao/redux-mock-store';
 import Pagination from './pagination';
 import { AnyAction } from '@reduxjs/toolkit';
 import userEvent from '@testing-library/user-event';
+import { guitars } from '../../utils/mocks/guitars';
 
 
 const mockStore = configureMockStore();
@@ -37,7 +38,7 @@ describe('Component: Pagination', () => {
 
     const store = mockStore({
       DATA: {
-        guitarsCount: 27},
+        productsCount: 27, products: guitars},
     });
 
     const pageActive = 1;
@@ -58,7 +59,7 @@ describe('Component: Pagination', () => {
 
     const store = mockStore({
       DATA: {
-        guitarsCount: 5},
+        productsCount: 5},
     });
 
     const pageActive = 1;
@@ -80,7 +81,7 @@ describe('Component: Pagination', () => {
 
     const store = mockStore({
       DATA: {
-        guitarsCount: 27},
+        productsCount: 27},
     });
 
     const pageActive = 2;
@@ -111,7 +112,7 @@ describe('Component: Pagination', () => {
 
     const store = mockStore({
       DATA: {
-        guitarsCount: 27},
+        productsCount: 27},
     });
 
     const pageActive = 3;
@@ -137,7 +138,7 @@ describe('Component: Pagination', () => {
 
     const store = mockStore({
       DATA: {
-        guitarsCount: 27},
+        productsCount: 27},
     });
 
 
@@ -157,7 +158,7 @@ describe('Component: Pagination', () => {
 
     const store = mockStore({
       DATA: {
-        guitarsCount: 27},
+        productsCount: 27},
     });
 
 
@@ -177,7 +178,7 @@ describe('Component: Pagination', () => {
 
     const store = mockStore({
       DATA: {
-        guitarsCount: 27},
+        productsCount: 27},
     });
 
 
@@ -197,7 +198,7 @@ describe('Component: Pagination', () => {
 
     const store = mockStore({
       DATA: {
-        guitarsCount: 27},
+        productsCount: 27},
     });
 
 

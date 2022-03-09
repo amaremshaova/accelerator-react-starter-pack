@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AppRoute} from '../../const';
-import { getGuitarsCount } from '../../store/guitar-data/selectors';
-import { COUNT_CARDS } from '../catalog/catalog';
+import { getProductsCount } from '../../store/product-data/selectors';
+import { COUNT_CARDS } from '../catalog-page/catalog-page';
 
 
 type PaginationProps = {
@@ -16,10 +16,10 @@ const SCROLL_TO_Y = 325;
 
 function Pagination(props: PaginationProps):JSX.Element{
 
-  const guitarsCount = useSelector(getGuitarsCount);
+  const productsCount = useSelector(getProductsCount);
 
   const {pageActive, onSetPage} = props;
-  const pagesCount = Math.ceil(guitarsCount / COUNT_CARDS);
+  const pagesCount = Math.ceil(productsCount / COUNT_CARDS);
 
   const location = useLocation();
   const history = useNavigate();

@@ -1,10 +1,19 @@
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { getProductsInCart } from '../../store/app-process/selectors';
 import FormSearch from '../form-search/form-search';
 
-const CART_COUNT = 2;
 
 function Header():JSX.Element{
+
+  const productsInCart = useSelector(getProductsInCart);
+
+
+  let totalCount = 0;
+  productsInCart.forEach((item) => {
+    totalCount += item.count;
+  });
 
   return(
     <header
@@ -18,7 +27,7 @@ function Header():JSX.Element{
         <nav className="main-nav">
           <ul className="main-nav__list">
             <li>
-              <Link className="link main-nav__link" to={AppRoute.Empty}>Каталог</Link>
+              <Link className="link main-nav__link" to={AppRoute.CatalogStartPage}>Каталог</Link>
             </li>
             <li>
               <Link className="link main-nav__link" to={AppRoute.Empty}>Где купить?</Link>
@@ -30,12 +39,19 @@ function Header():JSX.Element{
         </nav>
         <FormSearch/>
 
-        <Link className="header__cart-link" to={AppRoute.Cart} aria-label="Корзина">
+        <Link className="header__cart-link" to={AppRoute.Cart} aria-label="Корзина"
+          onClick={(evt)=> evt.currentTarget.blur()}
+        >
           <svg className="header__cart-icon" width="14" height="14" aria-hidden="true">
             <use href="#icon-basket"></use>
           </svg>
           <span className="visually-hidden">Перейти в корзину</span>
-          <span className="header__cart-count">{CART_COUNT}</span>
+          {
+            totalCount !== 0 ?
+              <span className="header__cart-count">{totalCount}</span>
+              : ''
+          }
+
         </Link>
       </div>
     </header>

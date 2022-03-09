@@ -30,7 +30,7 @@ exports[`Component: Catalog should render correctly 1`] = `
           <li>
             <a
               class="link main-nav__link"
-              href="/catalog/"
+              href="/catalog/page_1"
             >
               Каталог
             </a>
@@ -99,30 +99,7 @@ exports[`Component: Catalog should render correctly 1`] = `
         <ul
           class="form-search__select-list
         hidden"
-        >
-          <li
-            class="form-search__select-item"
-            tabindex="0"
-          >
-            <a
-              class="form-search__link-guitar"
-              href="/catalog/1"
-            >
-              Честер Bass
-            </a>
-          </li>
-          <li
-            class="form-search__select-item"
-            tabindex="0"
-          >
-            <a
-              class="form-search__link-guitar"
-              href="/catalog/2"
-            >
-              Честер Z300
-            </a>
-          </li>
-        </ul>
+        />
       </div>
       <a
         aria-label="Корзина"
@@ -144,11 +121,7 @@ exports[`Component: Catalog should render correctly 1`] = `
         >
           Перейти в корзину
         </span>
-        <span
-          class="header__cart-count"
-        >
-          2
-        </span>
+        
       </a>
     </div>
   </header>
@@ -172,6 +145,7 @@ exports[`Component: Catalog should render correctly 1`] = `
           <a
             class="link"
             href="/catalog/"
+            tabindex="0"
           >
             Главная
           </a>
@@ -182,6 +156,7 @@ exports[`Component: Catalog should render correctly 1`] = `
           <a
             class="link"
             href="/catalog/page_1"
+            tabindex="0"
           >
             Каталог
           </a>
@@ -428,19 +403,7 @@ exports[`Component: Catalog should render correctly 1`] = `
             Загрузка товаров...
           </p>
         </div>
-        <div
-          class="pagination page-content__pagination"
-        >
-          <ul
-            class="pagination__list"
-          >
-            
-            
-            
-            
-            
-          </ul>
-        </div>
+        
       </div>
     </div>
   </main>
@@ -684,5 +647,7 @@ exports[`Component: Catalog should render correctly 1`] = `
       </section>
     </div>
   </footer>
+  
+  
 </div>
 `;

@@ -9,7 +9,7 @@ function BreadCrumbs({crumbs}: BreadCrumbsProps):JSX.Element{
   return(
     <ul className='breadcrumbs page-content__breadcrumbs'>
       {
-        crumbs.map((crumb, index) =>
+        crumbs.map((crumb) =>
           (
             <li className='breadcrumbs__item' key = {crumb.name} >
               <Link className='link' to={crumb.link} tabIndex={0}>{crumb.name}</Link>

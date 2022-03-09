@@ -1,11 +1,14 @@
 import {ThunkActionResult} from '../types/actions';
 import { loadLikeGuitars, loadGuitarsCount, loadCommentsCount, loadPageGuitars,
-  loadMinMaxPrice, checkingLoadData, loadComments, loadGuitar,
-  checkingLoadComments, changeStatus} from './actions';
-import { Comment, CommentPost, Guitar } from '../types/guitar';
+  loadMinMaxPrice, checkingLoadData, loadComments, loadGuitar, changeStatus, addDiscount} from './actions';
+import { Guitar } from '../types/guitar';
 import { ApiPath} from '../const';
 import {toast} from 'react-toastify';
 import moment from 'moment';
+import { CouponPost } from '../types/coupon';
+import { CommentPost } from '../types/comment';
+import { Comment } from '../types/comment';
+import { GuitarComments } from '../types/guitar-comments';
 
 type GuitarsActionProps = {
   sortType: string | null,
@@ -25,39 +28,8 @@ type IndexLikeString = {
 
 
 const AUTH_FAIL_MESSAGE = 'Сервер не загружен';
+const STATUS_ERROR = 404;
 
-export const fetchCommentsAction = (id: number, start: number, end: number): ThunkActionResult =>
-  async (dispatch, _getState, api) => {
-    dispatch(checkingLoadComments(false));
-    const sortAsc = (a: Comment, b : Comment) => moment(b.createAt).valueOf() - moment(a.createAt).valueOf();
-    try {
-      const {data} = await api.get<Comment[]>(ApiPath.Guitars+String(id)+ApiPath.Comments);
-      if (start === null || end === null){
-        dispatch(loadComments(data.sort(sortAsc)));
-      }
-      else{
-        dispatch(loadComments(data.sort(sortAsc).slice(start, end)));
-      }
-
-      dispatch(loadCommentsCount(id, data.length));
-      dispatch(checkingLoadComments(true));
-    } catch {
-      toast.info(AUTH_FAIL_MESSAGE);
-    }
-  };
-
-export const fetchCommentsCountAction = (id: number): ThunkActionResult =>
-  async (dispatch, _getState, api) => {
-
-    dispatch(checkingLoadData(false));
-    try {
-      const {data} = await api.get<Comment[]>(ApiPath.Guitars+String(id)+ApiPath.Comments);
-      dispatch(loadCommentsCount(id, data.length));
-      dispatch(checkingLoadData(true));
-    } catch {
-      toast.info(AUTH_FAIL_MESSAGE);
-    }
-  };
 
 export const fetchLikeGuitarsAction = (likeString:string): ThunkActionResult =>
   async (dispatch, _getState, api) => {
@@ -102,10 +74,10 @@ export const fetchGuitarsAction = (props: GuitarsActionProps): ThunkActionResult
 
     try {
       const {filter, sort} = getApiFilterSortLimit(props);
-      const data = (await api.get<Guitar[]>(`${ApiPath.Guitars}?${filter}${sort}`)).data;
+      const {data} = await api.get<GuitarComments[]>(`${ApiPath.Guitars}?_embed=comments${filter}${sort}`);
 
-      data.forEach(async (guitar) => {
-        const comments = (await api.get<Guitar[]>(ApiPath.Guitars+String(guitar.id)+ApiPath.Comments)).data;
+      data.forEach((guitar) => {
+        const comments = guitar.comments;
         if (comments === undefined){
           dispatch(loadCommentsCount(guitar.id, 0));
         }
@@ -131,14 +103,24 @@ export const fetchGuitarsAction = (props: GuitarsActionProps): ThunkActionResult
 
   };
 
-export const fetchGuitarAction = (id: number): ThunkActionResult =>
+export const fetchGuitarAction = (id: number, start: number, end: number): ThunkActionResult =>
   async (dispatch, _getState, api) => {
+    const sortAsc = (a: Comment, b : Comment) => moment(b.createAt).valueOf() - moment(a.createAt).valueOf();
     try {
-      const data = (await api.get<Guitar>(ApiPath.Guitars+id)).data;
+      const {data} = await api.get<GuitarComments>(`${ApiPath.Guitars+id}?_embed=comments`);
+      if (start === null || end === null){
+        dispatch(loadComments(data.comments.sort(sortAsc)));
+      }
+      else{
+        dispatch(loadComments(data.comments.sort(sortAsc).slice(start, end)));
+      }
+
+      dispatch(loadCommentsCount(id, data.comments.length));
+
       dispatch(loadGuitar(data));
     } catch {
       toast.info(AUTH_FAIL_MESSAGE);
-      dispatch(changeStatus(404));
+      dispatch(changeStatus(STATUS_ERROR));
     }
   };
 
@@ -163,4 +145,16 @@ export const addReviewAction = (comment : CommentPost): ThunkActionResult =>
     }
 
   };
+
+export const addCouponAction = (coupon: CouponPost): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    try {
+      const data = (await api.post<number>(ApiPath.Coupons, coupon)).data;
+      dispatch(addDiscount(data));
+    } catch {
+      toast.info(AUTH_FAIL_MESSAGE);
+      dispatch(changeStatus(STATUS_ERROR));
+    }
+  };
+
 

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeStatus} from '../../store/actions';
 import { addReviewAction } from '../../store/api-actions';
 import { getResponseStatus } from '../../store/app-process/selectors';
-import { getComments} from '../../store/guitar-data/selectors';
+import { getComments} from '../../store/product-data/selectors';
 import { Guitar } from '../../types/guitar';
 
 type ModalReviewProps = {

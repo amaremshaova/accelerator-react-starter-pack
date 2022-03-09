@@ -29,7 +29,7 @@ const fakeApp = () => (
       <Routes>
         <Route path={AppRoute.Catalog + 1} element=
           {
-            <ReviewList isOpenModalSuccessReview={isOpenModalSuccessReview} onSetOpenModalReview={setOpenModalReview}/>
+            <ReviewList isOpenModalSuccessReview={isOpenModalSuccessReview} onSetOpenModalReview={setOpenModalReview} id={1}/>
           }
         />
       </Routes>

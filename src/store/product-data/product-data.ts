@@ -1,21 +1,19 @@
 import {createReducer} from '@reduxjs/toolkit';
-import { GuitarData } from '../../types/state';
+import { ProductData } from '../../types/state';
 
-import {loadGuitarsCount,
-  loadPageGuitars,
-  loadLikeGuitars,
+import {
   loadCommentsCount,
   loadMinMaxPrice,
   checkingLoadData,
   loadComments,
-  loadGuitar,
-  checkingLoadComments} from '../actions';
+  loadLikeGuitars,
+  loadGuitarsCount,
+  loadPageGuitars} from '../actions';
 
-const initialState: GuitarData = {
-  guitars: [],
-  activeGuitar: undefined,
-  likeGuitars: [],
-  guitarsCount: 0,
+const initialState: ProductData = {
+  products: [],
+  likeProducts: [],
+  productsCount: 0,
   minPrice: null,
   maxPrice: null,
   commentsCount: [],
@@ -24,29 +22,23 @@ const initialState: GuitarData = {
   comments: [],
 };
 
-const guitarData = createReducer(initialState, (builder) => {
+const productData = createReducer(initialState, (builder) => {
   builder
     .addCase(checkingLoadData, (state, action) => {
       state.isLoadData = action.payload;
-    })
-    .addCase(checkingLoadComments, (state, action) => {
-      state.isLoadComments = action.payload;
     })
     .addCase(loadMinMaxPrice,  (state, action) => {
       state.minPrice = action.payload.minPrice;
       state.maxPrice = action.payload.maxPrice;
     })
     .addCase(loadGuitarsCount, (state, action) => {
-      state.guitarsCount = action.payload;
-    })
-    .addCase(loadGuitar, (state, action) => {
-      state.activeGuitar = action.payload;
+      state.productsCount = action.payload;
     })
     .addCase(loadPageGuitars, (state, action) => {
-      state.guitars = action.payload;
+      state.products = action.payload;
     })
     .addCase(loadLikeGuitars, (state, action) => {
-      state.likeGuitars = action.payload;
+      state.likeProducts = action.payload;
     })
     .addCase(loadComments, (state, action) => {
       state.comments = action.payload;
@@ -54,15 +46,16 @@ const guitarData = createReducer(initialState, (builder) => {
     .addCase(loadCommentsCount, (state, action) => {
       const {id, count} = action.payload;
 
-      const item = state.commentsCount.find((commentsCount) => commentsCount.id === id);
-      if (item) {
-        item.count = count;
+      const index = state.commentsCount.findIndex((commentsCount) => commentsCount.id === id);
+      if (index !== -1) {
+        const array = state.commentsCount;
+        array[index].count = count;
+        state.commentsCount = array;
       }
       else{
         state.commentsCount = [...state.commentsCount, {id : id, count : count}];
       }
-
     });
 });
 
-export {guitarData};
+export {productData};

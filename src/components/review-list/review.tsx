@@ -1,6 +1,6 @@
 import moment from 'moment';
-import { Comment } from '../../types/guitar';
 import 'moment/locale/ru';
+import { Comment } from '../../types/comment';
 import Rating from '../rating/rating';
 
 type ReviewProps = {

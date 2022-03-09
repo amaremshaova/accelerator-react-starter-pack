@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { fetchCommentsAction, fetchGuitarAction} from '../../store/api-actions';
-import { getComments, getCommentsCount, getIsLoadComments} from '../../store/guitar-data/selectors';
+import { fetchGuitarAction} from '../../store/api-actions';
+import { getComments, getCommentsCount} from '../../store/product-data/selectors';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { StartScroll } from '../product-page/product-page';
 import Review from './review';
@@ -14,18 +13,18 @@ const QUARTER_PAGE = 4;
 const TEXT_LOADING = 'Загрузка отзывов...';
 
 type ReviewListProps = {
+  id: number,
   onSetOpenModalReview: (open: boolean) => void,
   isOpenModalSuccessReview: boolean,
 }
 
 
-function ReviewList({ isOpenModalSuccessReview, onSetOpenModalReview} : ReviewListProps) : JSX.Element {
+function ReviewList({ id, isOpenModalSuccessReview, onSetOpenModalReview} : ReviewListProps) : JSX.Element {
 
   const dispatch = useDispatch();
-  const {id} = useParams();
   const comments = useSelector(getComments);
   const commentsCount = useSelector(getCommentsCount).filter((item) => item.id === Number(id))[0]?.count;
-  const isLoad = useSelector(getIsLoadComments);
+  const isLoad = comments !== undefined;
 
   const listRef = useRef<HTMLDivElement | null>(null);
 
@@ -52,15 +51,13 @@ function ReviewList({ isOpenModalSuccessReview, onSetOpenModalReview} : ReviewLi
 
   useEffect(() => {
     if (isOpenModalSuccessReview){
-      dispatch(fetchCommentsAction(Number(id), 0, renderedReviewsCount));
-      dispatch(fetchGuitarAction(Number(id)));
+      dispatch(fetchGuitarAction(Number(id), 0, renderedReviewsCount));
     }
   }, [dispatch, id,  isOpenModalSuccessReview, renderedReviewsCount]);
 
   useEffect(() => {
-    dispatch(fetchCommentsAction(Number(id), 0, renderedReviewsCount));
-    dispatch(fetchGuitarAction(Number(id)));
-  }, [dispatch, id,  renderedReviewsCount]);
+    dispatch(fetchGuitarAction(id, 0, renderedReviewsCount));
+  }, [dispatch, id, renderedReviewsCount]);
 
   useEffect(() => {
     setRenderedCommentsCount(comments?.length);

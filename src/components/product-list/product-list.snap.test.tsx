@@ -7,7 +7,7 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { AppRoute } from '../../const';
 import { createMemoryHistory } from 'history';
 import thunk from 'redux-thunk';
-import Catalog from '../catalog/catalog';
+import Catalog from '../catalog-page/catalog-page';
 import ProductPage from '../product-page/product-page';
 import NotFoundPage from '../not-found-page/not-found-page';
 
@@ -20,6 +20,7 @@ const store = mockStore({
     minPrice: minPrice,
     maxPrice: maxPrice,
     commentsCount: commentsCountArray},
+  APP : {productsInCart: [{product: guitars[0], count: 1}]},
 });
 
 const history = createMemoryHistory();

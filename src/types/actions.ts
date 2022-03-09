@@ -18,8 +18,11 @@ export enum ActionType {
   LoadCommentsCount = 'data/loadCommentsCount',
   LoadMinMaxPrice = 'data/loadMinMaxPrice',
   CheckingLoadData = 'data/checkingLoadData',
-  CheckingLoadComments = 'data/checkingLoadComments',
-  ChangeStatus = 'data/changeStatus',
+  ChangeStatus = 'app/changeStatus',
+  AddProductInCart = 'app/addProductInCart',
+  ChangeProductsInCartCount = 'app/changeProductsInCartCount',
+  DeleteProduct = 'app/deleteProduct',
+  AddDiscount = 'app/addDiscount'
 }
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Action>;

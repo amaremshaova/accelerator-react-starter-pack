@@ -99,30 +99,7 @@ exports[`Component: ProductList should render correctly 1`] = `
         <ul
           class="form-search__select-list
         hidden"
-        >
-          <li
-            class="form-search__select-item"
-            tabindex="0"
-          >
-            <a
-              class="form-search__link-guitar"
-              href="/catalog/1"
-            >
-              Честер Bass
-            </a>
-          </li>
-          <li
-            class="form-search__select-item"
-            tabindex="0"
-          >
-            <a
-              class="form-search__link-guitar"
-              href="/catalog/2"
-            >
-              Честер Z300
-            </a>
-          </li>
-        </ul>
+        />
       </div>
       <a
         aria-label="Корзина"
@@ -147,7 +124,7 @@ exports[`Component: ProductList should render correctly 1`] = `
         <span
           class="header__cart-count"
         >
-          2
+          1
         </span>
       </a>
     </div>
@@ -172,6 +149,7 @@ exports[`Component: ProductList should render correctly 1`] = `
           <a
             class="link"
             href="/catalog/page_1"
+            tabindex="0"
           >
             Главная
           </a>
@@ -182,6 +160,7 @@ exports[`Component: ProductList should render correctly 1`] = `
           <a
             class="link"
             href="/catalog/page_1"
+            tabindex="0"
           >
             Каталог
           </a>
@@ -428,56 +407,7 @@ exports[`Component: ProductList should render correctly 1`] = `
             Загрузка товаров...
           </p>
         </div>
-        <div
-          class="pagination page-content__pagination"
-        >
-          <ul
-            class="pagination__list"
-          >
-            
-            <li
-              class="pagination__page pagination__page--active"
-            >
-              <a
-                class="link pagination__page-link"
-                href="#"
-              >
-                1
-              </a>
-            </li>
-            <li
-              class="pagination__page "
-            >
-              <a
-                class="link pagination__page-link"
-                href="#"
-              >
-                2
-              </a>
-            </li>
-            <li
-              class="pagination__page "
-            >
-              <a
-                class="link pagination__page-link"
-                href="#"
-              >
-                3
-              </a>
-            </li>
-            <li
-              class="pagination__page pagination__page--next"
-              id="next"
-            >
-              <a
-                class="link pagination__page-link"
-                href="#"
-              >
-                Далее
-              </a>
-            </li>
-          </ul>
-        </div>
+        
       </div>
     </div>
   </main>
@@ -721,5 +651,7 @@ exports[`Component: ProductList should render correctly 1`] = `
       </section>
     </div>
   </footer>
+  
+  
 </div>
 `;

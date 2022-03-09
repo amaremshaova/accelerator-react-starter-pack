@@ -14,9 +14,9 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 const store = mockStore({
-  DATA: {guitars: guitars,
-    likeGuitars: guitars,
-    guitarsCount: guitarsCount,
+  DATA: {products: guitars,
+    likeProducts: guitars,
+    productsCount: guitarsCount,
     minPrice: minPrice,
     maxPrice: maxPrice,
     commentsCount: commentsCountArray},
