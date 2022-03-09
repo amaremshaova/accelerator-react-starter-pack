@@ -37,6 +37,7 @@ describe('Async actions', () => {
     expect(store.getActions()).toEqual([
       loadComments(mockGuitarComments.comments),
       loadCommentsCount(id, mockGuitarComments.comments.length),
+      loadGuitar(mockGuitarComments),
     ]);
   });
 

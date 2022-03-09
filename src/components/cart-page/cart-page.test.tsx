@@ -33,7 +33,7 @@ describe('Component: Cart', () => {
       <Provider store = {store}>
         <Router navigator={history} location={history.location}>
           <Routes>
-            <Route path={AppRoute.Catalog} element={ <CartPage/>}/>
+            <Route path={AppRoute.Cart} element={ <CartPage/>}/>
           </Routes>
         </Router>
       </Provider>,
