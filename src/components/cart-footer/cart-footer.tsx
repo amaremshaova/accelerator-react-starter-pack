@@ -1,9 +1,8 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addDiscount } from '../../store/actions';
 import { addCouponAction } from '../../store/api-actions';
-import { getDiscount, getProductsInCart } from '../../store/app-process/selectors';
-import { Coupon } from '../../types/coupon';
+import { getDiscount, getProductsInCart, getResponseStatus } from '../../store/app-process/selectors';
 
 
 const CONST_FOR_DISCOUNT = 100;
@@ -22,8 +21,10 @@ function CartFooter(){
 
   const discount = useSelector(getDiscount) * getTotal() / CONST_FOR_DISCOUNT;
 
+  const status = useSelector(getResponseStatus);
+
   const [successCoupon, setSuccessCoupon] = useState<boolean | null>(null);
-  const [coupon, setCoupon] = useState<Coupon | null>(null);
+  const [coupon, setCoupon] = useState<string>('');
 
   const  dispatch = useDispatch();
 
@@ -46,6 +47,16 @@ function CartFooter(){
     }
   };
 
+  useEffect(() => {
+    if (status === 404){
+      setSuccessCoupon(false);
+    }
+    if (status === 200){
+      setSuccessCoupon(true);
+    }
+
+  }, [status]);
+
   return (
     <div className="cart__footer">
       <div className="cart__coupon coupon">
@@ -54,10 +65,9 @@ function CartFooter(){
         <form className="coupon__form" id="coupon-form" method="post"
           onSubmit={(evt) => {
             evt.preventDefault();
-            if (coupon !== null && successCoupon !== false){
+            if (coupon !== ''){
               dispatch(addCouponAction({coupon: coupon}));
               dispatch(addDiscount(0));
-              setSuccessCoupon(null);
             }
             submitRef.current?.blur();
           }}
@@ -71,13 +81,7 @@ function CartFooter(){
               name="coupon"
               ref={couponInput}
               onBlur={(evt) => {
-                if (!Object.values(Coupon).includes(evt.target.value.replace(/ /g, '') as Coupon)){
-                  setSuccessCoupon(false);
-                }
-                else {
-                  setSuccessCoupon(true);
-                  setCoupon(evt.target.value.replace(/ /g, '') as Coupon);
-                }
+                setCoupon(evt.target.value.replace(/ /g, ''));
               }}
             />
             {

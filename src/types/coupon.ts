@@ -5,6 +5,6 @@ export enum Coupon{
 }
 
 export type CouponPost = {
-  coupon: Coupon
+  coupon: string
 }
 

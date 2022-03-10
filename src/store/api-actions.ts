@@ -149,8 +149,10 @@ export const addReviewAction = (comment : CommentPost): ThunkActionResult =>
 export const addCouponAction = (coupon: CouponPost): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
-      const data = (await api.post<number>(ApiPath.Coupons, coupon)).data;
+      const dataPost = (await api.post<number>(ApiPath.Coupons, coupon));
+      const {data, status} = dataPost;
       dispatch(addDiscount(data));
+      dispatch(changeStatus(status));
     } catch {
       toast.info(AUTH_FAIL_MESSAGE);
       dispatch(changeStatus(STATUS_ERROR));
