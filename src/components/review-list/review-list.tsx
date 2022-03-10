@@ -32,15 +32,18 @@ function ReviewList({ id, isOpenModalSuccessReview, onSetOpenModalReview} : Revi
   const [renderedReviewsCount, setRenderedReviewsCount] = useState(INITIAL_REVIEWS_COUNT);
 
   const checkPosition = () => {
-    const height = document.body.offsetHeight;
-    const screenHeight = window.innerHeight;
-    const scrolled = window.scrollY;
-    const threshold = height - screenHeight / QUARTER_PAGE;
-    const position = scrolled + screenHeight;
 
-    if (position >= threshold && renderedReviewsCount <= commentsCount && isLoad) {
-      setRenderedReviewsCount(renderedReviewsCount + INITIAL_REVIEWS_COUNT);
-    }
+    setTimeout( () => {
+      const height = document.body.offsetHeight;
+      const screenHeight = window.innerHeight;
+      const scrolled = window.scrollY;
+      const threshold = height - screenHeight / QUARTER_PAGE;
+      const position = scrolled + screenHeight;
+
+      if (position >= threshold && renderedReviewsCount <= commentsCount && isLoad) {
+        setRenderedReviewsCount(renderedReviewsCount + INITIAL_REVIEWS_COUNT);
+      }
+    }, 1000);
   };
 
   useEffect(() => {
