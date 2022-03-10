@@ -68,7 +68,7 @@ describe('Async actions', () => {
     await store.dispatch(addCouponAction(mockCoupon));
 
     expect(store.getActions()).toEqual([
-      addDiscount(discount),
+      addDiscount(discount), changeStatus(200),
     ]);
   });
 
